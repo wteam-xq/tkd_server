@@ -1,0 +1,32 @@
+// 后台导航条
+.navbar.navbar-inverse(role='navigation')
+  .navbar-header
+    a.navbar-brand(href='/admin') wteam-xq
+  ul.nav.navbar-nav(id='main-nav')
+    li
+      a(href='/admin/users') 用户组
+    li
+      a(href='/admin/tkd') 三国杀FAQ 
+    li
+      a(href='/admin/resume') 个人简历
+  ul.nav.navbar-nav.navbar-right.clear-right
+    if type == 'tkd'
+      li
+        a(href='/tkd') 查看首页
+    else if type == 'resume'
+      li
+        a(href='/resume') 查看首页
+    else
+      li
+        a(href='/index') 查看首页
+    if user
+      li
+        a(href='#') 欢迎您，#{user.name}
+      li
+        a(href='/user/logout') 注销
+    else
+      li
+        a(href='/login') 登录
+
+//导入用户处理脚本
+script(src="/js/header.js")

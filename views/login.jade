@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  .row
+    .panel.panel-primary.col-md-6.col-md-offset-3
+      .panel-heading 用户登录
+      .panel-body
+        .alert.alert-warning.hidden(id='loginTips' role='alert') 警告内容
+
+        form(id='loginForm' name='loginform' action='/user/login' method='POST')
+          .form-group
+            label 邮箱:
+            input(type='text' name='email' id='email' placeholder='请输入用户邮箱').form-control
+          .form-group
+            label 用户密码:
+            input(type='password' name='pas' id='pas' placeholder='请输入密码').form-control
+
+          .form-group
+            img.unvisible.pull-right.loading-ico(src='/images/loading.gif' id='loading-ico' title='加载中...')
+            button(type='button' id='loginBtn').btn.btn-primary.pull-right 立即登录
+
+  //导入用户处理脚本
+  script(src="/js/users.js")

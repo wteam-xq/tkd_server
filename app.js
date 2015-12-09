@@ -5,26 +5,55 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+// 数据库保存用户登录信息
+var session = require('express-session');
+var mongoStore = require('connect-mongo')(session);
+// 图片上传模块
+var buyboy = require('connect-busboy');
 
+var dbOptions = require('./dbConfig');
 var routes = require('./routes/index');
 var admin = require('./routes/admin');
 
 var app = express();
 
 // 链接数据库
-var db = mongoose.connect('mongodb://localhost/mongoDemo');
+var db = mongoose.connect(dbOptions.url);
+// 连接数据库（数据库设置了密码）
+// var dbUrl='mongodb://' + dbOptions.username+':'+dbOptions.password+'@'+dbOptions.host+':'+dbOptions.port+'/'+options.dbName;
+// mongoose.connect(dbUrl);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// 上传文件依赖文件
+app.use(buyboy());
 // uncomment after placing your favicon in /public
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cookieParser(dbOptions.cookieSecret));
+app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    cookie: {maxAge:3600000},
+    secret: dbOptions.cookieSecret,
+    store: new mongoStore({
+        db: dbOptions.dbName,
+        url: dbOptions.url
+    })
+}));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(favicon(__dirname + '/favicon.ico'));
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
+
+// 用户登录信息记录
+app.use(function(req, res, next) {
+    if (req.session && req.session.user){
+        app.locals.user = req.session.user
+    }
+    next(); 
+});
 
 app.use('/', routes);
 app.use('/admin', admin);
@@ -35,8 +64,6 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
-
-// error handlers
 
 // development error handler
 // will print stacktrace
@@ -59,6 +86,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

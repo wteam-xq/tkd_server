@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  include header
+  .row
+    .col-md-4
+      a(href='/admin/users').thumbnail
+        img(src="/images/user_group.png" alt="用户组")
+      .caption.text-center
+        h3 用户组
+    .col-md-4
+      a(href='/admin/tkd').thumbnail
+        img(src="/images/three_kingdoms.png" alt="三国杀faq")
+      .caption.text-center
+        h3 三国杀faq
+    .col-md-4
+      a(href='/admin/resume').thumbnail
+        img(src="/images/user.png" alt="个人站")
+      .caption.text-center
+        h3 个人简历
+  
+  //导入用户处理脚本
+  //- script(src="/js/admin_index.js")

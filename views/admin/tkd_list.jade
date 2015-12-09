@@ -1,0 +1,174 @@
+extends ../layout
+
+block content
+  include header
+  //- 主页面 
+  .mainmenu.main-panel#mainmenu
+    .menu-nav.row
+      ul.nav.nav-tabs(role="tablist")
+        li.active.col-md-3(id="menu-rule")
+          a(href="#rule" data-toggle="tab") 规则
+        li.col-md-3(id="menu-card")
+          a(href="#card" data-toggle="tab") 游戏牌
+        li.col-md-3(id="menu-heros")
+          a(href="#heros" data-toggle="tab") 武将
+        li.col-md-3(id="menu-str")
+          a(href="#strategy" data-toggle="tab") 攻略
+
+    // 规则组合
+    .tab-content
+      // 主页面点击删除的ID
+      input(type='hidden' value='' id='selectId')
+      .list-group.tab-pane(class="fade in active item-list" id="rule") 
+        table.table.table-bordered.table-hover
+          thead
+            tr.info
+              th 标题
+              th 内容简介
+              th 图标
+              th 更新
+              th 删除
+          tbody
+            if rules && rules.length > 0
+              each rule in rules
+                tr
+                  td #{rule.title}
+                  td #{rule.desc}
+                  td
+                    img.list-ico(src='#{rule.ico}' alt='#{rule.title}')
+                  td 
+                    a.link.rule-update(href='javascript:void(0);' data-id='#{rule._id}') 更新
+                  td
+                    a(data-id='#{rule._id}' class="removeRule").btn.btn-danger 删除
+            else
+              tr
+                td 1V1规则
+                td 1v1对战模式是以三国杀基本规则...
+                td
+                  img.list-ico(src='/images/caobei.png' alt='1v1规则')
+                td 
+                  a.link.rule-update(href='javascript:void(0);' data-id='1') 更新
+                td
+                  a(data-id='removeRule' class="removeRule").btn.btn-danger 删除
+
+        a(id='rule-add').btn.btn-primary 添加 
+
+      .tab-pane(class="fade item-list" id="card") 卡牌内容
+      .tab-pane(class="fade item-list" id="heros") 武将内容
+      .tab-pane(class="fade item-list" id="strategy") 攻略内容
+
+    
+    //删除提示弹出框
+    .modal(id='removeConfirm')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button(type="button" data-dismiss="modal").close
+              span(aria-hidden="true") &times;
+              span.sr-only Close
+            h4.modal-title 删除提示
+          
+          .modal-body
+            p(id='removeTips') 确定要删除该用户吗？
+          
+          .modal-footer
+            button(type="button" data-dismiss="modal" id="cancelRemove").btn.btn-default 关闭
+            button(type="button" id="removeSubmit").btn.btn-primary 确定
+
+  //- 面包屑导航条
+  ol.breadcrumb.admin-crumb.unvisible(id='admin-crumb')
+    li
+      a(href='/admin') 首页
+    li
+      a(href='javascript:void(0);' id='to-tkd') 三国杀FAQ
+    li.active 规则添加
+
+  //- 二级页面
+  .container.unvisible#sub-panel
+    .row.unvisible.rule-add-panel
+      form.form-horizontal(method="POST" action="tkd/ruleAdd" name='userform')
+        .alert.alert-warning.hidden(id='addTips' role='alert') 警告内容
+        .form-group
+          label.col-md-1.control-label 标题
+          .col-md-10
+            input(type="text" class="title" name="title").form-control
+        .form-group
+          label.col-md-1.control-label 简介
+          .col-md-10
+            input(type="text" class="desc" name="desc").form-control
+        .form-group
+          label.col-md-1.control-label 图标
+          .col-md-2.prelative
+            //- 隐藏上传图控件, data-type rule-add:  新增规则， rule-update： 更新规则
+            input.upload-file.form-control.unvisibility.btn.btn-primary(type="file" name="ico" value='点击上传图标')
+            input.icoPath(type="hidden" name='icoPath' value='')
+            .btn.btn-primary(class="upload-ico").form-control 点击上传图标
+          .col-md-2
+            .upload-tips.unvisible 图标上传提示
+            input.icoName(type='hidden' name='icoName' value='')
+          .col-md-4.col-md-offset-2
+            .upload-pro.unvisible.progress
+              .progress-bar(role="progressbar")
+        .form-group.ue-group
+          label.col-md-1.control-label 详情
+          .col-md-10
+            input(type='hidden' name='ueContent' class='ueContent')
+            input(type='hidden' name='ueTxt' class='ueTxt')
+            // 调用百度编辑器
+            script(id="add-content" name="content" class="ue-container" type="text/plain")
+
+        .form-group
+          .col-md-1.col-md-offset-1
+            .commitBtn.btn.btn-primary(data-type='add') 提交添加
+            //- button(type="submit").btn.btn-primary 提交添加
+          .col-md-2
+            a.back-main.btn.btn-primary 返回
+    .row.unvisible.rule-update-panel
+      form.form-horizontal(method="POST" action="tkd/ruleUpdate" name='userform')
+        input(type='hidden' class='ruleId' name='id' value='')
+        .form-group
+          label.col-md-1.control-label 标题
+          .col-md-10
+            input(type="text" class="title" name="title").form-control
+        .form-group
+          label.col-md-1.control-label 简介
+          .col-md-10
+            input(type="text" class="desc" name="desc").form-control
+        .form-group
+          label.col-md-1.control-label 图标
+          .col-md-2.prelative
+            //- 隐藏上传图控件, data-type rule-add:  新增规则， rule-update： 更新规则
+            input.upload-file.form-control.unvisibility.btn.btn-primary(type="file" name="ico" value='点击上传图标')
+            input.icoPath(type="hidden" name='icoPath' value='')
+            .btn.btn-primary(class="upload-ico").form-control 点击上传图标
+          .col-md-2
+            .upload-tips.unvisible 图标上传提示
+            input.icoName(type='hidden' name='icoName' value='')
+          .col-md-4.col-md-offset-2
+            .upload-pro.unvisible.progress
+              .progress-bar(role="progressbar")
+        .form-group.ue-group
+          label.col-md-1.control-label 详情
+          .col-md-10
+            input(type='hidden' name='ueContent' class='ueContent')
+            input(type='hidden' name='ueTxt' class='ueTxt')
+            // 调用百度编辑器
+            script(id="update-content" name="content" class="ue-container" type="text/plain")
+
+        .form-group
+          .col-md-1.col-md-offset-1
+            button.commitBtn.btn.btn-primary(data-type='update') 提交更新
+            //- button(type="submit").btn.btn-primary 提交更新
+          .col-md-2
+            a.back-main.btn.btn-primary 返回
+
+  //导入百度编辑器
+  script(src="/components/ueditor/ueditor.config.js")
+  script(src="/components/ueditor/ueditor.all.min.js")
+  script(charset="utf-8" src="/components/ueditor/lang/zh-cn/zh-cn.js")
+  // 加入上传插件
+  script(type="text/javascript",src="/components/jquery.ui.widget.js")
+  script(type="text/javascript",src="/components/jquery.iframe-transport.js")
+  script(type="text/javascript",src="/components/jquery.fileupload.js")
+  //导入tkd处理脚本
+  script(src="/js/tkd.js")

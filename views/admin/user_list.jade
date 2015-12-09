@@ -1,50 +1,169 @@
 extends ../layout
 
 block content
-  h3.text-center 用户后台列表
-  table.table.table-bordered
-    thead
-      tr
-        th 姓名
-        th 年龄
-        th 职业
-        th 爱好
-        th 更新
-        th 删除
-    tbody
-      if users && users.length > 0
-        each user in users
-          tr
-            td #{user.name}
-            td #{user.age}
-            td #{user.job}
-            td #{user.hobby}
-            td 
-              a.link(href="/admin/user/update?id=#{user.id}") 更新
-            td
-              a(data-id='#{user.id}' class="removeUser").btn.btn-danger 删除
-      
-      input(type='hidden' value='' id='selectId')
-      
-  a(href="/admin/user/add").btn.btn-primary 添加
-
-  //删除提示弹出框
-  .modal(id='removeConfirm')
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button(type="button" data-dismiss="modal").close
-            span(aria-hidden="true") &times;
-            span.sr-only Close
-          h4.modal-title 删除提示
-        
-        .modal-body
-          p(id='removeTips') 确定要删除该用户吗？
-        
-        .modal-footer
-          button(type="button" data-dismiss="modal" id="cancelRemove").btn.btn-default 关闭
-          button(type="button" id="removeSubmit").btn.btn-primary 确定
-              
+  include header
   
+  //- 一级页面
+  .main-panel#main-panel
+    h3.text-center 用户后台列表
+    table.table.table-bordered.table-hover
+      thead
+        tr.info
+          th 姓名
+          th 邮箱
+          th 年龄
+          th 职业
+          th 爱好
+          th 更新
+          th 删除
+      tbody
+        if users && users.length > 0
+          each user in users
+            tr
+              td #{user.name}
+              td #{user.email}
+              td #{user.age}
+              td #{user.job}
+              td #{user.hobby}
+              td 
+                a.link.update-link(data-id='#{user.id}' href='javascript:void(0);') 更新
+                span.unvisible 数据请求中... 
+              td
+                a(data-id='#{user.id}' class="removeUser").btn.btn-danger 删除
+        
+        input(type='hidden' value='' id='selectId')
+        
+    a(id='add-user').btn.btn-primary 添加
+
+    //删除提示弹出框
+    .modal(id='removeConfirm')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button(type="button" data-dismiss="modal").close
+              span(aria-hidden="true") &times;
+              span.sr-only Close
+            h4.modal-title 删除提示
+          
+          .modal-body
+            p(id='removeTips') 确定要删除该用户吗？
+          
+          .modal-footer
+            button(type="button" data-dismiss="modal" id="cancelRemove").btn.btn-default 关闭
+            button(type="button" id="removeSubmit").btn.btn-primary 确定
+                
+  //- 面包屑导航条
+  ol.breadcrumb.admin-crumb.unvisible(id='admin-crumb')
+    li
+      a(href='/admin') 首页
+    li
+      a(href='javascript:void(0);' id='to-user') 用户组
+    li.active 用户添加
+
+  //- 二级页面
+  .container.unvisible#sub-panel
+    .row(id='user-add').add-panel
+      .panel.panel-primary.col-md-12
+        .panel-body
+          .alert.alert-warning.hidden(id='addTips' role='alert') 警告内容
+          form.form-horizontal(method="POST" action="user/add" name='userform' class='userform')
+            .form-group
+              label.col-md-2.control-label 姓名
+              .col-md-8
+                input(type="text" id="name" name="name").form-control
+            .form-group
+              .col-md-2.control-label
+                label 邮箱
+                span.ntnull-tips *
+              .col-md-8
+                input(type="text" id="email" name="email").form-control
+            .form-group
+              label.col-md-2.control-label 年龄
+              .col-md-8
+                input(type="text" id="age" name="age").form-control
+            .form-group
+              label.col-md-2.control-label 职业
+              .col-md-8
+                input(type="text" id="job" name="job").form-control
+            .form-group
+              label.col-md-2.control-label 爱好
+              .col-md-8
+                input(type="text" id="hobby" name="hobby").form-control
+            .form-group
+              .col-md-2.control-label
+                label 密码
+                span.ntnull-tips *
+              .col-md-8
+                input(type="password" id="pas" name="pas").form-control
+            .form-group
+              .col-md-2.control-label
+                label 确认密码
+                span.ntnull-tips *
+              .col-md-8
+                input(type="password" id="confirmPas" name="confirmPas").form-control
+
+            .form-group
+              .col-md-1.col-md-offset-2
+                button(type="button" class='commitBtn').btn.btn-primary 提交添加
+                button.hidden(type="submit" class='subBtn').btn.btn-primary 提交添加
+              .col-md-2
+                a(class='back-main').btn.btn-primary 返回
+
+    .row(id='user-update').update-panel
+      .panel.panel-primary.col-md-12
+        .panel-body
+          .alert.alert-warning.hidden(id='update-tips' role='alert') 警告内容
+          form.form-horizontal(name="userform" id="userform" method="POST" action="user/update")
+            .form-group.hidden
+              input(type="text" id="id" name="id" value="")
+            .form-group
+              label.col-md-2.control-label 姓名
+              .col-md-8
+                input(type="text" id="name" name="name" value="").form-control
+            .form-group
+              .col-md-2.control-label
+                label 邮箱
+                span.ntnull-tips *
+              .col-md-8
+                input(type="text" id="email" name="email" value="").form-control
+            .form-group
+              label.col-md-2.control-label 年龄
+              .col-md-8
+                input(type="text" id='age' name="age" value="").form-control
+            .form-group
+              label.col-md-2.control-label 职业
+              .col-md-8
+                input(type="text" id="job" name="job" value="").form-control
+            .form-group
+              label.col-md-2.control-label 爱好
+              .col-md-8
+                input(type="text" id="hobby" name="hobby" value="").form-control
+            
+            .form-group
+              .col-md-2.control-label
+                label 密码
+                span.ntnull-tips *
+              .col-md-8
+                input(type="password" id="pas" name="pas" value="").form-control
+            .form-group
+              .col-md-2.control-label
+                label 确认密码
+                span.ntnull-tips *
+              .col-md-8
+                input(type="password" id="confirmPas" name="confirmPas" value="").form-control
+
+            .form-group
+              label.col-md-2.control-label 上次更新时间
+              .col-md-8
+                .form-control.bg-grey(id='last-update')
+                //- .form-control #{moment(user.meta.updateAt).format("YYYY-MM-DD")}
+
+            .form-group
+              .col-md-1.col-md-offset-2
+                button(type="button" class='commitBtn' data-type='update').btn.btn-primary 提交更新
+                button.hidden(type="submit" id='subBtn').btn.btn-primary 提交更新
+              .col-md-2
+                a(class='back-main').btn.btn-primary 返回
+
   //导入用户处理脚本
-  script(src="/javascripts/users.js")
+  script(src="/js/users.js")

@@ -1,5 +1,6 @@
 .DS_Store
 dest/*
-gulp/node_modules/*
-gulp/dist/*
+node_modules/*
+bower_components/*
+public/upload_imgs/*
 npm-debug.log
