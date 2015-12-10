@@ -7,7 +7,7 @@ var resumeControl = require('../control/resumeCtrl');
 
 router.get('/test', userCtrol.testList);
 //检查用户是否已登录
-// router.get('/*', checkLogin);
+router.get('/*', checkLogin);
 
 // 后台首页菜单
 router.get('/', userCtrol.adminIndex);

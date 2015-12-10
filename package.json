@@ -17,7 +17,7 @@
     "formidable": "^1.0.17",
     "jade": "~1.9.1",
     "moment": "^2.9.0",
-    "mongoose": "^4.0.0",
+    "mongoose": "^4.2",
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0",
     "underscore": "^1.8.2"
