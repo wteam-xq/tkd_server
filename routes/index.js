@@ -1,6 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var frontControl = require('../control/frontCtrl');
+var express = require('express'),
+    router = express.Router(),
+    frontControl = require('../control/frontCtrl'),
+    tkdControl = require('../control/tkdCtrl');
 
 // 前端首页
 router.get('/', frontControl.index);
@@ -21,11 +22,14 @@ router.route('/user/login')
 // 用户注销
 // 用户登录异步请求
 router.get('/user/logout', frontControl.logout);
-
 // ajax 测试后台接口
 router.get('/test_get', frontControl.testGet);
 router.get('/ajax_page', frontControl.testGetPage);
 router.post('/test_post', frontControl.testPost);
 
+/**************************三国杀前端json router**************************/
+// 三国杀规则列表
+router.get('/tkd_rules', tkdControl.tkdRulesList);
+router.get('/tkd_rule', tkdControl.getRuleById);
 
 module.exports = router;

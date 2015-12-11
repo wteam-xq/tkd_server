@@ -87,7 +87,7 @@ webCtrol.testGet = function(req, res) {
   var _param = req.query.name || '';
   res.json({data: 'hello ' + _param});
 }
-
+// 以json形式返回前端数据
 webCtrol.testPost = function(req, res) {
   // 获取前端参数
   var _param = req.body.name || '';

@@ -1,18 +1,16 @@
-var express = require('express');
-var router = express.Router();
-var userCtrol = require('../control/userCtrl');
-var UEControl = require('../control/UECtrl');
-var tkdControl = require('../control/tkdCtrl');
-var resumeControl = require('../control/resumeCtrl');
+var express = require('express'),
+    router = express.Router(),
+    userCtrol = require('../control/userCtrl'),
+    UEControl = require('../control/UECtrl'),
+    tkdControl = require('../control/tkdCtrl'),
+    resumeControl = require('../control/resumeCtrl');
 
 router.get('/test', userCtrol.testList);
 //检查用户是否已登录
 router.get('/*', checkLogin);
-
 // 后台首页菜单
 router.get('/', userCtrol.adminIndex);
 router.get('/index', userCtrol.adminIndex);
-
 /*三国杀后台列表页*/
 router.get('/tkd', tkdControl.tkdList);
 router.get('/tkd/index', tkdControl.tkdList);
@@ -23,14 +21,11 @@ router.post('/tkd/ruleUpdate', tkdControl.ruleUpdate);
 router.get('/tkd/getRuleById', tkdControl.getRuleById);
 // 根据ID删除规则
 router.post('/tkd/rule/delete', tkdControl.deleteRuleById);
-
 // 上传图标
 router.post('/upload/ico', tkdControl.uploadIco);
-
 /*个人简历后台列表页*/
 router.get('/resume', resumeControl.resumeIndex);
 router.get('/resume/index', resumeControl.resumeIndex);
-
 /* 用户组后台列表页 */
 router.get('/users', userCtrol.userList);
 // 查询用户(暂根据邮箱查询)
@@ -44,13 +39,10 @@ router.route('/user/update')
 .post(userCtrol.updateUserPost);
 // 删除用户
 router.post('/user/delete', userCtrol.deleteUser);
-
-
 // UE编辑器后台路由
 router.route('/ue/uploads')
 .get(UEControl.index)
 .post(UEControl.index);
-
 //检查用户是否已登录
 function checkLogin(req, res, next){
   // 用户登录不检查
@@ -60,5 +52,4 @@ function checkLogin(req, res, next){
     res.redirect('/login');
   }
 }
-
 module.exports = router;

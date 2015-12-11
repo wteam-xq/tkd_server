@@ -10,11 +10,11 @@ var session = require('express-session');
 var mongoStore = require('connect-mongo')(session);
 // 图片上传模块
 var buyboy = require('connect-busboy');
-
 var dbOptions = require('./dbConfig');
-var routes = require('./routes/index');
-var admin = require('./routes/admin');
-
+// 路由模块
+var routes = require('./routes/index'),
+    admin = require('./routes/admin');
+    
 var app = express();
 
 // 链接数据库
@@ -55,6 +55,7 @@ app.use(function(req, res, next) {
     next(); 
 });
 
+// 路由管理器
 app.use('/', routes);
 app.use('/admin', admin);
 

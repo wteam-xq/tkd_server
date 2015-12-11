@@ -1,9 +1,8 @@
-var tkdCtrol = {
-}
-var _ = require('underscore');
-var formidable = require('formidable');
-var fs = require('fs');
-var Rule = require('../models/TkdRule');
+var tkdCtrol = {},
+    _ = require('underscore'),
+    formidable = require('formidable'),
+    fs = require('fs'),
+    Rule = require('../models/TkdRule');
 
 /**************************三国杀后台逻辑************************************/
 // 查询用户列表
@@ -20,7 +19,6 @@ tkdCtrol.tkdList = function(req, res) {
       });
     }
   });
-  
 };
 // 上传图标
 tkdCtrol.uploadIco = function(req, res) {
@@ -109,7 +107,6 @@ tkdCtrol.ruleAdd = function(req, res){
       res.redirect('/admin/tkd');
     }
   });
-
 };
 
 // 根据ID获取规则数据
@@ -126,7 +123,7 @@ tkdCtrol.getRuleById = function(req, res){
       }
     });
   }
-}
+};
 
 // 更新规则
 tkdCtrol.ruleUpdate = function(req, res){
@@ -164,6 +161,25 @@ tkdCtrol.deleteRuleById = function(req, res){
   });
 };
 
-/**************************三国杀end**********************************/
+/**************************三国杀后台逻辑end*****************************/
+
+
+
+/**************************三国杀前端json start**************************/
+// 查询规则列表
+tkdCtrol.tkdRulesList = function(req, res) {
+  // 搜索规则列表
+  Rule.fetch(function(err, rules){
+    if (err){
+      console.log('查询异常');
+    }else{
+      res.json({"rules": rules});
+    }
+  });
+};
+
+
+
+/**************************三国杀前端json end*****************************/
 
 module.exports = tkdCtrol
