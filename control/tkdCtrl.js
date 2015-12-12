@@ -7,14 +7,62 @@ var tkdCtrol = {},
 /**************************三国杀后台逻辑************************************/
 // 查询用户列表
 tkdCtrol.tkdList = function(req, res) {
-  // 搜索规则列表
-  Rule.fetch(function(err, rules){
+  var pageNum = req.query.pageNum?parseInt(req.query.pageNum,10):1,
+      opt = {"pageNum": pageNum},
+      pageSize = 10,
+      sizeCount = 0,
+      skipCount = 0,
+      totalPage = 1;
+  
+  if (pageNum > 1){
+    skipCount = (pageNum - 1) * pageSize - 1;
+  }else if (pageNum <= 0){
+    showObj = {
+        "pageNum": pageNum,
+        "pageSize": pageSize,
+        "totalPage": totalPage,
+        "ruleList": []
+    };
+    res.render('admin/tkd_list', { 
+      title: '三国杀列表页',
+      rules: showObj,
+      type: 'tkd'
+    });
+    return false;
+  }
+  // 搜索规则列表(自个儿计算分页数据)
+  Rule.fetchAll(function(err, rules){
+    var showObj = {}, ruleList = [], ruleObj, i, len;
+    len = rules.length;
+
     if (err){
       console.log('查询异常');
     }else{
+      if (len > 0) {
+        totalPage = Math.ceil(len/pageSize);
+      } 
+      for(i = skipCount; i < len; i++){
+        ruleObj = rules[i];
+        sizeCount++;
+        ruleList.push({
+          "title": ruleObj.title,
+          "ico": ruleObj.ico,
+          "desc": ruleObj.desc,
+          "_id": ruleObj._id
+        });
+        if(sizeCount >= 10){
+          break;
+        }
+      }
+      showObj = {
+        "pageNum": pageNum,
+        "pageSize": pageSize,
+        "totalPage": totalPage,
+        "ruleList": ruleList
+      };
       res.render('admin/tkd_list', { 
         title: '三国杀列表页',
-        rules: rules,
+        rules: showObj,
         type: 'tkd'
       });
     }
@@ -168,12 +216,48 @@ tkdCtrol.deleteRuleById = function(req, res){
 /**************************三国杀前端json start**************************/
 // 查询规则列表
 tkdCtrol.tkdRulesList = function(req, res) {
+  var pageNum = req.query.pageNum?parseInt(req.query.pageNum, 10):1,
+      pageSize = 10,
+      opt = {"pageNum": pageNum,"pageSize": pageSize},
+      totalPage = 'none';
+
+  if (pageNum <= 0){
+    showObj = {
+        "pageNum": pageNum,
+        "pageSize": pageSize,
+        "totalPage": totalPage,
+        "ruleList": []
+    };
+    res.json({"rules": showObj});
+    return false;
+  }
+  if (pageNum > 0) {
+    opt.skipCount = (opt.pageNum - 1) * opt.pageSize;
+  } else {
+    opt.skipCount = 0;
+  }
   // 搜索规则列表
-  Rule.fetch(function(err, rules){
+  Rule.fetch(opt, function(err, rules){
+    var showObj = {}, ruleList = [], ruleObj, i, len;
     if (err){
       console.log('查询异常');
     }else{
-      res.json({"rules": rules});
+      for(i = 0, len = rules.length; i < len; i++){
+        ruleObj = rules[i];
+        ruleList.push({
+          "title": ruleObj.title,
+          "ico": ruleObj.ico,
+          "desc": ruleObj.desc,
+          "_id": ruleObj._id
+        });
+      }
+      showObj = {
+        "pageNum": pageNum,
+        "pageSize": pageSize,
+        "totalPage": totalPage,
+        "ruleList": ruleList
+      };
+      res.json({"rules": showObj});
     }
   });
 };

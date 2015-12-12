@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var _ = require('underscore');
+var mongoose = require('mongoose'),
+    _ = require('underscore');
 
 // 创建规则的数据库模型骨架
 var TkdRuleSchema = new mongoose.Schema({
@@ -35,7 +35,15 @@ TkdRuleSchema.pre('save', function(next){
 // 数据模型方法(实际调用时， this 指向的是model对象)
 TkdRuleSchema.statics = {
   // 查找规则列表， 根据标题升序
-  fetch: function(cbf){
+  fetch: function(opt, cbf){
+    return this
+      .find({})
+      .skip(opt.skipCount)
+      .limit(opt.pageSize)
+      .sort({'title': 'asc'})
+      .exec(cbf);
+  },
+  fetchAll: function(cbf){
     return this
       .find({})
       .sort({'title': 'asc'})

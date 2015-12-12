@@ -29,8 +29,8 @@ block content
               th 更新
               th 删除
           tbody
-            if rules && rules.length > 0
-              each rule in rules
+            if rules && rules.ruleList.length > 0
+              each rule in rules.ruleList
                 tr
                   td #{rule.title}
                   td #{rule.desc}
