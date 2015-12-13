@@ -34,6 +34,8 @@ db.createCollection("users")
 { "ok" : 1}
 db.createCollection("tkdrules")
 { "ok" : 1}
+db.createCollection("tkdcard")
+{ "ok" : 1}
 
 ```
 

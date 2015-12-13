@@ -2,6 +2,7 @@ var tkdCtrol = {},
     _ = require('underscore'),
     formidable = require('formidable'),
     fs = require('fs'),
+    Card = require('../models/TkdCard'),
     Rule = require('../models/TkdRule');
 
 /**************************三国杀后台逻辑************************************/
