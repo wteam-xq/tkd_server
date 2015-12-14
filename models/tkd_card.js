@@ -6,6 +6,7 @@ var TkdCardSchema = new mongoose.Schema({
   title: String,
   desc: String,
   ico: String,
+  cardList: [{htmlCont: String, title:String, anchorId:String}],
   meta: {
     createAt: {
       type: Date,

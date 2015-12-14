@@ -1,7 +1,7 @@
 var userCtrol = {
 }
 //  用户组数据库model
-var User = require('../models/User');
+var User = require('../models/user');
 // 日期格式化
 var moment = require('moment');
 

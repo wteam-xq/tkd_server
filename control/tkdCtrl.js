@@ -2,13 +2,14 @@ var tkdCtrol = {},
     _ = require('underscore'),
     formidable = require('formidable'),
     fs = require('fs'),
-    Card = require('../models/TkdCard'),
-    Rule = require('../models/TkdRule');
+    Card = require('../models/tkd_card'),
+    Rule = require('../models/tkd_rule');
 
 /**************************三国杀后台逻辑************************************/
 // 查询用户列表
 tkdCtrol.tkdList = function(req, res) {
   var pageNum = req.query.pageNum?parseInt(req.query.pageNum,10):1,
+      tkd_type = req.query.tkd_type?req.query.tkd_type:"rule",
       opt = {"pageNum": pageNum},
       pageSize = 10,
       sizeCount = 0,
@@ -24,50 +25,83 @@ tkdCtrol.tkdList = function(req, res) {
         "totalPage": totalPage,
         "ruleList": []
     };
-    res.render('admin/tkd_list', { 
+    res.render('admin/tkd_rule_list', { 
       title: '三国杀列表页',
       rules: showObj,
       type: 'tkd'
     });
     return false;
   }
-  // 搜索规则列表(自个儿计算分页数据)
-  Rule.fetchAll(function(err, rules){
-    var showObj = {}, ruleList = [], ruleObj, i, len;
-    len = rules.length;
+  switch(tkd_type){
+    case "rule":
+      searchRuleList();
+      break;
+    case "card":
+      searchCardList()
+      break;
+    case "heros":
+      searchRuleList();
+      break;
+    case "strategy":
+      searchRuleList();
+      break;
+    default:
+      searchRuleList();
+      break;
+  }
+  function searchRuleList(){
+    // 搜索规则列表(自个儿计算分页数据)
+    Rule.fetchAll(function(err, rules){
+      var showObj = {}, ruleList = [], ruleObj, i, len;
+      len = rules.length;
 
-    if (err){
-      console.log('查询异常');
-    }else{
-      if (len > 0) {
-        totalPage = Math.ceil(len/pageSize);
-      } 
-      for(i = skipCount; i < len; i++){
-        ruleObj = rules[i];
-        sizeCount++;
-        ruleList.push({
-          "title": ruleObj.title,
-          "ico": ruleObj.ico,
-          "desc": ruleObj.desc,
-          "_id": ruleObj._id
-        });
-        if(sizeCount >= 10){
-          break;
+      if (err){
+        console.log('查询异常');
+      }else{
+        if (len > 0) {
+          totalPage = Math.ceil(len/pageSize);
+        } 
+        for(i = skipCount; i < len; i++){
+          ruleObj = rules[i];
+          sizeCount++;
+          ruleList.push({
+            "title": ruleObj.title,
+            "ico": ruleObj.ico,
+            "desc": ruleObj.desc,
+            "_id": ruleObj._id
+          });
+          if(sizeCount >= 10){
+            break;
+          }
         }
+        showObj = {
+          "pageNum": pageNum,
+          "pageSize": pageSize,
+          "totalPage": totalPage,
+          "ruleList": ruleList
+        };
+        res.render('admin/tkd_rule_list', { 
+          title: '三国杀列表页',
+          rules: showObj,
+          type: 'rule'
+        });
       }
-      showObj = {
-        "pageNum": pageNum,
-        "pageSize": pageSize,
-        "totalPage": totalPage,
-        "ruleList": ruleList
-      };
-      res.render('admin/tkd_list', { 
-        title: '三国杀列表页',
-        rules: showObj,
-        type: 'tkd'
-      });
-    }
-  });
+    });
+  }
+  function searchCardList(){
+    var showObj = {}, cardList = [], ruleObj, i, len;
+    showObj = {
+      "pageNum": pageNum,
+      "pageSize": pageSize,
+      "totalPage": totalPage,
+      "cardList": cardList
+    };
+    res.render('admin/tkd_card_list', { 
+      title: '三国杀列表页',
+      cardObj: showObj,
+      type: 'card'
+    });
+  }
 };
 // 上传图标
 tkdCtrol.uploadIco = function(req, res) {

@@ -1,4 +1,4 @@
-var User = require('../models/User');
+var User = require('../models/user');
 // 密码加密
 var bcrypt = require('bcrypt-nodejs');
 var webCtrol = {

@@ -2,18 +2,20 @@ extends ../layout
 
 block content
   include header
-  //- 主页面 
+  //- 主页面
+  // 选项卡类型
+  input(type='hidden' value='#{type}' id='tabType')
   .mainmenu.main-panel#mainmenu
     .menu-nav.row
       ul.nav.nav-tabs(role="tablist")
         li.active.col-md-3(id="menu-rule")
-          a(href="#rule" data-toggle="tab") 规则
+          a(href="#" title="规则") 规则
         li.col-md-3(id="menu-card")
-          a(href="#card" data-toggle="tab") 游戏牌
+          a(href="/admin/tkd?tkd_type=card" title="游戏牌") 游戏牌
         li.col-md-3(id="menu-heros")
-          a(href="#heros" data-toggle="tab") 武将
+          a(href="/admin/tkd?tkd_type=heros" title="武将") 武将
         li.col-md-3(id="menu-str")
-          a(href="#strategy" data-toggle="tab") 攻略
+          a(href="/admin/tkd?tkd_type=strategy" title="攻略") 攻略
 
     // 规则组合
     .tab-content
@@ -57,7 +59,6 @@ block content
             //-       a.link.rule-update(href='javascript:void(0);' data-id='1') 更新
             //-     td
             //-       a(data-id='removeRule' class="removeRule").btn.btn-danger 删除
-
         a(id='rule-add').btn.btn-primary 添加 
 
       .tab-pane(class="fade item-list" id="card") 卡牌内容
@@ -82,13 +83,7 @@ block content
             button(type="button" data-dismiss="modal" id="cancelRemove").btn.btn-default 关闭
             button(type="button" id="removeSubmit").btn.btn-primary 确定
 
-  //- 面包屑导航条
-  ol.breadcrumb.admin-crumb.unvisible(id='admin-crumb')
-    li
-      a(href='/admin') 首页
-    li
-      a(href='javascript:void(0);' id='to-tkd') 三国杀FAQ
-    li.active 规则添加
+  include breadcrumb
 
   //- 二级页面
   .container.unvisible#sub-panel
