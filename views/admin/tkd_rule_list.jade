@@ -4,7 +4,7 @@ block content
   include header
   //- 主页面
   // 选项卡类型
-  input(type='hidden' value='#{type}' id='tabType')
+  input(type='hidden' value='#{tkd_type}' id='tabType')
   .mainmenu.main-panel#mainmenu
     .menu-nav.row
       ul.nav.nav-tabs(role="tablist")
@@ -86,7 +86,7 @@ block content
   include breadcrumb
 
   //- 二级页面
-  .container.unvisible#sub-panel
+  .container.unvisible#subPanel
     .row.unvisible.rule-add-panel
       form.form-horizontal(method="POST" action="tkd/ruleAdd" name='userform')
         .alert.alert-warning.hidden(id='addTips' role='alert') 警告内容
@@ -173,4 +173,4 @@ block content
   script(type="text/javascript",src="/components/jquery.iframe-transport.js")
   script(type="text/javascript",src="/components/jquery.fileupload.js")
   //导入tkd处理脚本
-  script(src="/js/tkd.js")
+  script(src="/js/tkd_rule.js")

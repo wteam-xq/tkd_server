@@ -4,10 +4,10 @@ $(function(){
   // 主页面
   var $main_menu = $('#mainmenu');
   // 二级页面
-  var $sub_panel = $('#sub-panel');
+  var $sub_panel = $('#subPanel');
   // 导航条
-  var $admin_crumb = $('#admin-crumb');
-  var $to_tkd = $('#to-tkd');
+  var $admin_crumb = $('#adminCrumb');
+  var $to_tkd = $('#toTkd');
   // 存储待删除ID隐藏域
   var $selected_id = $main_menu.find('#selectId');
   // 弹出框

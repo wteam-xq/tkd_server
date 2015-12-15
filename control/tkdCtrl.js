@@ -83,7 +83,8 @@ tkdCtrol.tkdList = function(req, res) {
         res.render('admin/tkd_rule_list', { 
           title: '三国杀列表页',
           rules: showObj,
-          type: 'rule'
+          type: 'tkd',
+          "tkd_type": 'rule'
         });
       }
     });
@@ -99,7 +100,8 @@ tkdCtrol.tkdList = function(req, res) {
     res.render('admin/tkd_card_list', { 
       title: '三国杀列表页',
       cardObj: showObj,
-      type: 'card'
+      type: 'tkd',
+      "tkd_type": "card"
     });
   }
 };

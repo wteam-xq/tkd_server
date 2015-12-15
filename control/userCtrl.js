@@ -18,7 +18,7 @@ userCtrol.testList = function(req, res) {
 
 // 后台首页菜单
 userCtrol.adminIndex = function(req, res) {
-  res.render('admin/index', { title: 'admin_index'});
+  res.render('admin/index', { title: 'admin_index', type: 'users' });
 }
 
 /**************************用户组************************************/

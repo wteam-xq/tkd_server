@@ -4,7 +4,7 @@ block content
   include header
   //- 主页面
   // 选项卡类型
-  input(type='hidden' value='#{type}' id='tabType')
+  input(type='hidden' value='#{tkd_type}' id='tabType')
   .mainmenu.main-panel#mainmenu
     .menu-nav.row
       ul.nav.nav-tabs(role="tablist")
@@ -50,7 +50,7 @@ block content
                 td
                 td
             
-        a(id='card-add').btn.btn-primary 添加 
+        a(id='addCardBtn').btn.btn-primary 添加 
 
       .tab-pane(class="fade item-list" id="card") 卡牌内容
       .tab-pane(class="fade item-list" id="heros") 武将内容
@@ -74,3 +74,6 @@ block content
             button(type="button" id="removeSubmit").btn.btn-primary 确定
 
   include breadcrumb
+
+  //导入tkd处理脚本
+  script(src="/js/tkd_card.js")
