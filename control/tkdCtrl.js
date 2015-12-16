@@ -2,6 +2,7 @@ var tkdCtrol = {},
     _ = require('underscore'),
     formidable = require('formidable'),
     fs = require('fs'),
+    appLog = require('../common/app_log.js'),
     Card = require('../models/tkd_card'),
     Rule = require('../models/tkd_rule');
 
@@ -56,7 +57,7 @@ tkdCtrol.tkdList = function(req, res) {
       len = rules.length;
 
       if (err){
-        console.log('查询异常');
+        appLog.writeErrorLog("tkdCtrl.js", "查询规则列表异常");
       }else{
         if (len > 0) {
           totalPage = Math.ceil(len/pageSize);
@@ -166,7 +167,9 @@ tkdCtrol.uploadIco = function(req, res) {
 
   // 文件解析事件
   form.parse(req, function(err, fields, files) {
-    err && console.log('formidabel error : ' + err);
+    if(err){
+      appLog.writeErrorLog("tkdCtrl.js", "上传图片文件解析异常");
+    }
   });
 };
 
@@ -187,7 +190,7 @@ tkdCtrol.ruleAdd = function(req, res){
   Rule.createInfo(rule, function(error, result){
     if (error){
       // 写一错误显示页面， 错误信息在该页面显示之
-      console.log(error);
+      appLog.writeErrorLog("tkdCtrl.js", "添加规则至数据库异常");
     }else{
       res.redirect('/admin/tkd');
     }
@@ -224,7 +227,7 @@ tkdCtrol.ruleUpdate = function(req, res){
   };
   Rule.updateInfo(id, rule, function(err, updateCount){
     if (err){
-      console.log(err.error, '   错误码：' + updateCount);
+      appLog.writeErrorLog("tkdCtrl.js", "更新规则数据库操作异常，错误码：" + updateCount);
       res.redirect('/admin/tkd');
     }else{
       res.redirect('/admin/tkd');
@@ -238,7 +241,6 @@ tkdCtrol.deleteRuleById = function(req, res){
 
   Rule.deleteInfo(id, function(err, updateCount){
     if (err){
-      // console.log(err.error, '   错误码：' + updateCount);
       res.json({error: '删除规则错误', code:'500'});
     }else{
       res.json({success:'true'});
@@ -277,7 +279,7 @@ tkdCtrol.tkdRulesList = function(req, res) {
   Rule.fetch(opt, function(err, rules){
     var showObj = {}, ruleList = [], ruleObj, i, len;
     if (err){
-      console.log('查询异常');
+      appLog.writeErrorLog("tkdCtrl.js", "查询规则列表异常");
     }else{
       for(i = 0, len = rules.length; i < len; i++){
         ruleObj = rules[i];

@@ -3,4 +3,6 @@ dest/*
 node_modules/*
 bower_components/*
 public/upload_imgs/*
+!public/upload_imgs/.gitkeep
+public/server_log/log*
 npm-debug.log
