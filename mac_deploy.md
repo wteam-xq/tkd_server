@@ -1,9 +1,9 @@
 #### 本地部署（mac 操作系统）
 mac 上除了安装、配置mongodb数据库不同外， 其他步骤与window基本相同；
 
-* 确保系统已安装 git 以及 node 环境;(mac 安装git node直接百度 mac git/ mac node即可没什么难度)
+* 确保系统已安装 git 以及 node 环境;(mac 安装git node直接百度 mac git/ mac node即可, 没什么难度)
 
-* mac终端进入某一目录（建议放置工程的工作目录，例如：Users/userName/mygit）:
+* mac终端进入某一目录（建议进入工作目录，例如：Users/userName/mygit）:
 ```Bash
 git clone https://github.com/wteam-xq/tkd_server 
 ```

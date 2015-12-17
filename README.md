@@ -5,7 +5,7 @@
 
 =======
 
-#### 本地部署（win7 64bit, mac部署请查阅:[mac_deploy](https://github.com/wteam-xq/tkd_server/blob/master/mac_deploy.md)）  
+#### 本地部署（win7 64bit, mac部署请点击:[mac_deploy](https://github.com/wteam-xq/tkd_server/blob/master/mac_deploy.md)）  
 
 * 确保本地已安装 git 以及 node 环境
   * win7下安装git [git 安装教程地址](http://wenku.baidu.com/view/e7d838999b89680203d825ba)
