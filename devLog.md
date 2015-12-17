@@ -14,6 +14,7 @@
 * 2015-12-14 添加后台 卡牌表单UI;
 * 2015-12-15 后台 卡牌添加功能开发；
 * 2015-12-16 更新mac部署说明，并完成日志文件保存操作；
+* 2015-12-17 使用可视化工具管理 mongodb 数据库（robomongodb）, 导入导出数据库
 
 
 
@@ -26,3 +27,4 @@
 * 实战小技巧, nodejs 调试工具： (nodejs 调试还是比较麻烦的)
   * 1.[node-inspector](http://jingyan.baidu.com/article/dca1fa6fbd580ff1a44052de.html)
   * 2.如果你使用webStorm编辑器， 则可以[在IDE中调试](http://jingyan.baidu.com/article/73c3ce28eafb95e50343d9ee.html)
+

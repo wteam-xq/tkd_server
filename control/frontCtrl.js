@@ -1,8 +1,9 @@
-var User = require('../models/user');
-// 密码加密
-var bcrypt = require('bcrypt-nodejs');
-var webCtrol = {
-}
+var User = require('../models/user'),
+    // 密码加密
+    bcrypt = require('bcrypt-nodejs'),
+    // 记录日志模块
+    appLog = require('../common/app_log.js'),
+    webCtrol = {};
 
 webCtrol.showLogin = function(req, res){
   res.render('login', { 
@@ -65,7 +66,7 @@ webCtrol.showResume = function(req, res){
 webCtrol.index = function(req, res){
   User.fetch(function(err, users){
     if (err){
-      console.log('查询异常');
+      appLog.writeErrorLog("frontCtrl.js", "查询用户列表异常");
     }else{
       res.render('users', { 
         title: '用户组页面' ,
