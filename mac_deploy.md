@@ -1,9 +1,9 @@
 #### 本地部署（mac 操作系统）
 mac 上除了安装、配置mongodb数据库不同外， 其他步骤与window基本相同；
 
-* 确保系统已安装 git 以及 node 环境;(mac 安装git node直接百度 mac git/ mac node即可没什么难度)
+* 确保系统已安装 git 以及 node 环境;(mac 安装git node直接百度 mac git/ mac node即可, 没什么难度)
 
-* mac终端进入某一目录（建议放置工程的工作目录，例如：Users/userName/mygit）:
+* mac终端进入某一目录（建议进入工作目录，例如：Users/userName/mygit）:
 ```Bash
 git clone https://github.com/wteam-xq/tkd_server 
 ```
@@ -22,7 +22,7 @@ git clone https://github.com/wteam-xq/tkd_server
 	* 解压缩文件：tar -zxvf mongodb-osx-x86_64-2.6.3.tgz
  
 * 第三步：
-	* 将解压出来的文件夹重命名并剪切到其他任意文件夹，本人将其改名为“mongodb”然后放置在“applications”文件夹下：
+	* 将解压出来的文件夹重命名并剪切到其他任意文件夹，本人将其改名为“mongodb”然后放置在“applications”文件夹下；（mac 剪切： 先把要剪切的文件按CMD+C复制，然后，到目的位置，按下OPTION+CMD+V粘粘，就会发现复制的源文件已经被剪切过来了。）
 	* 在 mongodb 文件夹下创建文件夹 data
  
 * 第四步：
@@ -36,7 +36,7 @@ git clone https://github.com/wteam-xq/tkd_server
 	* //切记是 ./mongod ，网上有的说是mongod 但是我试过是错误的
  
 * 第六步：启动mongod
-	* 终端进入上述"mongodb/bin"目录，使用命令“./mongod”启动mongoDB server，启动后注意不要关闭终端(mac 上虽然提示data/db不存在并退出监听，但第七步仍然能成功！原因不明)
+	* 终端进入上述"mongodb/bin"目录，使用命令“./mongod”启动mongoDB server，启动后注意不要关闭终端
  
 * 第七步：启动mongo
 	* 另外打开一个终端窗口【快捷键 command+T 】，

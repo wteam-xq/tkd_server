@@ -1,9 +1,11 @@
 var userCtrol = {
 }
 //  用户组数据库model
-var User = require('../models/user');
-// 日期格式化
-var moment = require('moment');
+var User = require('../models/user'),
+    // 日期格式化
+    moment = require('moment'),
+    // 日志记录模块
+    appLog = require('../common/app_log.js');
 
 // 后台接口原数据显示
 userCtrol.testList = function(req, res) {
@@ -26,7 +28,7 @@ userCtrol.adminIndex = function(req, res) {
 userCtrol.userList = function(req, res) {
   User.fetch(function(err, users){
     if (err){
-      console.log('查询异常');
+      appLog.writeErrorLog("userCtrl.js", "查询用户列表异常");
     }else{
       res.render('admin/user_list', { 
         title: 'admin' ,
@@ -50,7 +52,7 @@ userCtrol.addUserPost = function(req, res, next) {
   
   User.createInfo(userObj, function(err, user){
     if (err){
-      console.log('新增用户信息错误');
+      appLog.writeErrorLog("userCtrl.js", "新增用户信息错误");
     }else{
       if (user && user.name){
         res.redirect('/admin/users');
@@ -86,7 +88,7 @@ userCtrol.updateUserPost = function(req, res) {
   };
   User.updateInfo(id, userObj, function(err, updateCount){
     if (err){
-      console.log(err.error, '   错误码：' + updateCount);
+      appLog.writeErrorLog("userCtrl.js", "更新用户信息错误");
       res.redirect('/admin/users');
     }else{
       res.redirect('/admin/users');
