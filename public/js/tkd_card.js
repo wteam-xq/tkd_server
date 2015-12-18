@@ -9,7 +9,9 @@ $(function(){
       $adminCrumb = $('#admin-crumb'),
       $toTkd = $('#to-tkd'),
       // 新增卡牌按钮
-      $addCardBtn = $('#addCardBtn');
+      $addCardBtn = $('#addCardBtn'),
+      // 返回主页面按钮
+      $backMain = $subPanel.find('.back-main');
 
   var tkdCardObj = {
     init: function(){
@@ -20,9 +22,28 @@ $(function(){
       $addCardBtn.on('click', function(){
         This.showNewCardPanel();
       });
+      // 二级页面返回一级页面按钮点击
+      $backMain.on('click', function(){
+        This.backMainPanel();
+      });
     },
     showNewCardPanel: function(){
-      alert('弹出新建卡牌二级页面');
+      var $this = $(this),
+          $addPanel = $subPanel.find('.card-add-panel');
+
+      $subPanel.find('.row').hide();
+      $subPanel.show();
+      $addPanel.show();
+      $mainMenu.hide();
+      // 导航条出现
+      $adminCrumb.find('.active:first').html('添加规则');
+      $adminCrumb.show();
+    },
+    backMainPanel: function(){
+      $subPanel.find('.row').hide();
+      $mainMenu.show();
+      // 导航条隐藏
+      $adminCrumb.hide();
     }
   };
 

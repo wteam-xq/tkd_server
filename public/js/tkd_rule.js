@@ -2,20 +2,20 @@
 $(function(){
 
   // 主页面
-  var $main_menu = $('#mainmenu');
-  // 二级页面
-  var $sub_panel = $('#subPanel');
-  // 导航条
-  var $admin_crumb = $('#adminCrumb');
-  var $to_tkd = $('#toTkd');
-  // 存储待删除ID隐藏域
-  var $selected_id = $main_menu.find('#selectId');
-  // 弹出框
-  var $confirm_dialog = $main_menu.find('.modal');
-  // 弹出框提示
-  var $remove_tips = $('#removeTips');
-  // 增加记录 是否清空原内容标志位
-  var add_reset = false;
+  var $main_menu = $('#mainmenu'),
+    // 二级页面
+    $sub_panel = $('#subPanel'),
+    // 导航条
+    $admin_crumb = $('#adminCrumb'),
+    $to_tkd = $('#toTkd'),
+    // 存储待删除ID隐藏域
+    $selected_id = $main_menu.find('#selectId'),
+    // 弹出框
+    $confirm_dialog = $main_menu.find('.modal'),
+    // 弹出框提示
+    $remove_tips = $('#removeTips'),
+    // 增加记录 是否清空原内容标志位
+    add_reset = false;
 
   // 初始化函数
   init();
@@ -213,8 +213,8 @@ $(function(){
     });
     // 增加规则按钮点击
     $rule_add_btn.on('click', function(){
-      var $this = $(this);
-      var $add_panel = $sub_panel.find('.rule-add-panel');
+      var $this = $(this),
+          $add_panel = $sub_panel.find('.rule-add-panel');
 
       $sub_panel.find('.row').hide();
       $sub_panel.show();
