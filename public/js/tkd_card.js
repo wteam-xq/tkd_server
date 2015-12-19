@@ -1,4 +1,4 @@
-// 用户列表脚本
+// 卡牌列表脚本
 $(function(){
 
   // 主页面
@@ -18,7 +18,9 @@ $(function(){
       this.initEvt();
     },
     initEvt: function(){
-      var This = this;
+      var This = this,
+          $fileDom;
+
       $addCardBtn.on('click', function(){
         This.showNewCardPanel();
       });
@@ -26,6 +28,9 @@ $(function(){
       $backMain.on('click', function(){
         This.backMainPanel();
       });
+      // 赋予上传事件
+      $fileDom = $subPanel.find('.upload-file');
+      fileUploadUtil.fileUploadInit($fileDom);
     },
     showNewCardPanel: function(){
       var $this = $(this),
@@ -48,5 +53,4 @@ $(function(){
   };
 
   tkdCardObj.init();
-
 });

@@ -1,4 +1,4 @@
-// 用户列表脚本
+// 规则列表脚本
 $(function(){
 
   // 主页面
@@ -95,19 +95,19 @@ $(function(){
       $sub_panel.find('.back-main').trigger('click');
     });
     
-    // 隐藏上传图标相关节点
+    // 赋予上传事件
     var $file_dom = $sub_panel.find('.upload-file');
     fileUploadConfig($file_dom);
   }
 
   // file-upload控件事件
   function fileUploadConfig($file_dom){
-    var $upload_tips = null;
-    var $upload_pro = null;
+    var $upload_tips = null,
+        $upload_pro = null;
     // 文件点击事件
     $file_dom.on('click', function(){
-      var $this = $(this);
-      var $parnet_grounp = $this.parents('.form-group');
+      var $this = $(this),
+          $parnet_grounp = $this.parents('.form-group');
 
       $upload_tips = $parnet_grounp.find('.upload-tips');
       $upload_pro = $parnet_grounp.find('.upload-pro');
@@ -115,7 +115,6 @@ $(function(){
       $upload_pro.hide();
       $upload_pro.find('.progress-bar').css('width', '0%').html('');
     });
-
     // 上传图标 代码
     $file_dom.fileupload({
       url: '/admin/upload/ico',
@@ -136,8 +135,7 @@ $(function(){
         $upload_tips.show();
         data.context = $('<div/>').appendTo($upload_tips);
         $.each(data.files, function (index, file) {
-            var node = $('<p/>')
-                    .append($('<span/>').text(file.name));
+            var node = $('<p/>').append($('<span/>').text(file.name));
             node.appendTo(data.context);
         });
     }).on('fileuploadprocessalways', function (e, data) {
@@ -145,19 +143,13 @@ $(function(){
           file = data.files[index],
           node = $(data.context.children()[index]);
       if (file.preview) {
-        node
-            .prepend('<br>')
-            .prepend(file.preview);
+        node.prepend('<br>').prepend(file.preview);
       }
       if (file.error) {
-        node
-            .append('<br>')
-            .append($('<span class="text-danger"/>').text(file.error));
+        node.append('<br>').append($('<span class="text-danger"/>').text(file.error));
       }
       if (index + 1 === data.files.length) {
-        data.context.find('button')
-            .text('Upload')
-            .prop('disabled', !!data.files.error);
+        data.context.find('button').text('Upload').prop('disabled', !!data.files.error);
       }
     }).on('fileuploadprogressall', function (e, data) {
         // 文件上传完成后， 前端进度条样式改变

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
     _ = require('underscore');
 
-// 创建规则的数据库模型骨架
+// 创建卡牌的数据库模型骨架
 var TkdCardSchema = new mongoose.Schema({
   title: String,
   desc: String,
@@ -19,7 +19,7 @@ var TkdCardSchema = new mongoose.Schema({
   }
 });
 
-// 保存（更新）规则前调用
+// 保存（更新）卡牌前调用
 TkdCardSchema.pre('save', function(next){
   var card = this;
   if (card.isNew){
@@ -32,7 +32,7 @@ TkdCardSchema.pre('save', function(next){
 
 // 数据模型方法(实际调用时， this 指向的是model对象)
 TkdCardSchema.statics = {
-  // 查找规则列表， 根据标题升序
+  // 查找卡牌类型列表， 根据标题升序
   fetch: function(opt, cbf){
     return this
       .find({})
@@ -47,22 +47,22 @@ TkdCardSchema.statics = {
       .sort({'title': 'asc'})
       .exec(cbf);
   },
-  // 根据_id 查找规则
+  // 根据_id 查找卡牌
   findById: function(id, cbf){
     return this
       .findOne({_id: id}).exec(cbf);
   },
-  // 根据规则标题查找规则
+  // 根据规则标题查找卡牌
   findByTitle: function(title, cbf){
     return this
       .find({title: title}).exec(cbf);
   },
-  // 创建规则
+  // 创建卡牌
   createInfo: function(rule, cbf){
     return this
       .create(rule, cbf);
   },
-  // 更新规则
+  // 更新卡牌
   updateInfo: function(id, ruleObj, cbf){
     var ruleModel = this;
     // 调用 save 进行更新
@@ -84,7 +84,7 @@ TkdCardSchema.statics = {
       });
     });
   },
-  // 删除规则
+  // 删除卡牌
   deleteInfo: function(id, cbf){
     var conditions = {_id: id};
     return this

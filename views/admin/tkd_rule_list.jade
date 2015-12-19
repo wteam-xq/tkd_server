@@ -49,18 +49,7 @@ block content
                 td
                 td
                 td
-            //- else
-            //-   tr
-            //-     td 1V1规则
-            //-     td 1v1对战模式是以三国杀基本规则...
-            //-     td
-            //-       img.list-ico(src='/images/caobei.png' alt='1v1规则')
-            //-     td 
-            //-       a.link.rule-update(href='javascript:void(0);' data-id='1') 更新
-            //-     td
-            //-       a(data-id='removeRule' class="removeRule").btn.btn-danger 删除
         a(id='rule-add').btn.btn-primary 添加 
-
       .tab-pane(class="fade item-list" id="card") 卡牌内容
       .tab-pane(class="fade item-list" id="heros") 武将内容
       .tab-pane(class="fade item-list" id="strategy") 攻略内容
@@ -77,7 +66,7 @@ block content
             h4.modal-title 删除提示
           
           .modal-body
-            p(id='removeTips') 确定要删除该用户吗？
+            p(id='removeTips') 确定要删除该规则吗？
           
           .modal-footer
             button(type="button" data-dismiss="modal" id="cancelRemove").btn.btn-default 关闭
