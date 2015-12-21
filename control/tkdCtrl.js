@@ -248,6 +248,27 @@ tkdCtrol.deleteRuleById = function(req, res){
   });
 };
 
+// 添加卡牌
+tkdCtrol.cardAdd = function(req, res){
+  var card = {
+    title: req.body.title || '',
+    desc: req.body.desc || '',
+    ico: req.body.icoPath || '',
+    icoName: req.body.icoName || ''
+  };
+  if (!req.body.title) {
+    res.redirect('/admin/tkd');
+  }
+  Card.createInfo(card, function(error, result){
+    if (error){
+      // 写一错误显示页面， 错误信息在该页面显示之
+      appLog.writeErrorLog("tkdCtrl.js", "添加卡牌至数据库异常");
+    }else{
+      res.redirect('/admin/tkd?tkd_type=card');
+    }
+  });
+};
+
 /**************************三国杀后台逻辑end*****************************/
 
 

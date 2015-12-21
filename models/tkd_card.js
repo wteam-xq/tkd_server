@@ -58,25 +58,25 @@ TkdCardSchema.statics = {
       .find({title: title}).exec(cbf);
   },
   // 创建卡牌
-  createInfo: function(rule, cbf){
+  createInfo: function(card, cbf){
     return this
-      .create(rule, cbf);
+      .create(card, cbf);
   },
   // 更新卡牌
-  updateInfo: function(id, ruleObj, cbf){
-    var ruleModel = this;
+  updateInfo: function(id, cardObj, cbf){
+    var cardModel = this;
     // 调用 save 进行更新
     if (id == undefined || id == ''){
       cbf({error: 'id格式不对！'}, 500);
     }
-    var _rule = null;
-    ruleModel.findById(id, function(err, rule){
+    var _card = null;
+    cardModel.findById(id, function(err, card){
       if (err){
         cbf(err, 500);
         return
       }
-      _rule = _.extend(rule, ruleObj);
-      rule.save(function(error, rule){
+      _card = _.extend(card, cardObj);
+      card.save(function(error, card){
         if (error){
           cbf(error, 500);
         }
