@@ -52,4 +52,7 @@ a {color: #00B7FF;}
 .upload-file{position: absolute;z-index: 100;}
 .list-ico{width: 65px;height: 60px;}
 
+/*后台三国杀 管理样式*/
+.removeCard{ margin-right:10px; }
+
 

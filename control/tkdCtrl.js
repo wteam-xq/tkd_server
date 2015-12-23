@@ -7,7 +7,7 @@ var tkdCtrol = {},
     Rule = require('../models/tkd_rule');
 
 /**************************三国杀后台逻辑************************************/
-// 查询用户列表
+// 查询列表(规则、卡牌、武将、攻略)
 tkdCtrol.tkdList = function(req, res) {
   var pageNum = req.query.pageNum?parseInt(req.query.pageNum,10):1,
       tkd_type = req.query.tkd_type?req.query.tkd_type:"rule",
@@ -90,19 +90,43 @@ tkdCtrol.tkdList = function(req, res) {
       }
     });
   }
+  // 查找卡牌列表
   function searchCardList(){
-    var showObj = {}, cardList = [], ruleObj, i, len;
-    showObj = {
-      "pageNum": pageNum,
-      "pageSize": pageSize,
-      "totalPage": totalPage,
-      "cardList": cardList
-    };
-    res.render('admin/tkd_card_list', { 
-      title: '三国杀列表页',
-      cardObj: showObj,
-      type: 'tkd',
-      "tkd_type": "card"
+    Card.fetchAll(function(err, cards){
+      var showObj = {}, cardList = [], cardObj, i, len;
+      len = cards.length;
+      if (err){
+        appLog.writeErrorLog("tkdCtrl.js", "查询卡牌列表异常");
+      }else{
+        if (len > 0) {
+          totalPage = Math.ceil(len/pageSize);
+        } 
+        for(i = skipCount; i < len; i++){
+          cardObj = cards[i];
+          sizeCount++;
+          cardList.push({
+            "title": cardObj.title,
+            "ico": cardObj.ico,
+            "desc": cardObj.desc,
+            "_id": cardObj._id
+          });
+          if(sizeCount >= 10){
+            break;
+          }
+        }
+        showObj = {
+          "pageNum": pageNum,
+          "pageSize": pageSize,
+          "totalPage": totalPage,
+          "cardList": cardList
+        };
+        res.render('admin/tkd_card_list', { 
+          title: '三国杀列表页',
+          type: 'tkd',
+          "cardObj": showObj,
+          "tkd_type": 'card'
+        });
+      }
     });
   }
 };
@@ -321,6 +345,53 @@ tkdCtrol.tkdRulesList = function(req, res) {
     }
   });
 };
+// 查询卡牌列表
+tkdCtrol.tkdCardList = function(req, res){
+  var pageNum = req.query.pageNum?parseInt(req.query.pageNum, 10):1,
+      pageSize = 10,
+      opt = {"pageNum": pageNum,"pageSize": pageSize},
+      totalPage = 'none';
+
+  if (pageNum <= 0){
+    showObj = {
+        "pageNum": pageNum,
+        "pageSize": pageSize,
+        "totalPage": totalPage,
+        "cardList": []
+    };
+    res.json({"cards": showObj});
+    return false;
+  }
+  if (pageNum > 0) {
+    opt.skipCount = (opt.pageNum - 1) * opt.pageSize;
+  } else {
+    opt.skipCount = 0;
+  }
+  // 搜索规则列表
+  Card.fetch(opt, function(err, cards){
+    var showObj = {}, cardList = [], cardObj, i, len;
+    if (err){
+      appLog.writeErrorLog("tkdCtrl.js", "查询卡牌列表异常");
+    }else{
+      for(i = 0, len = cards.length; i < len; i++){
+        cardObj = cards[i];
+        cardList.push({
+          "title": cardObj.title,
+          "ico": cardObj.ico,
+          "desc": cardObj.desc,
+          "_id": cardObj._id
+        });
+      }
+      showObj = {
+        "pageNum": pageNum,
+        "pageSize": pageSize,
+        "totalPage": totalPage,
+        "cardList": cardList
+      };
+      res.json({"cards": showObj});
+    }
+  });
+}
 
 
 
