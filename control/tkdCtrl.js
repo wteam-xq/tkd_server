@@ -236,6 +236,21 @@ tkdCtrol.getRuleById = function(req, res){
     });
   }
 };
+// 根据ID获取卡牌数据
+tkdCtrol.getCardById = function(req, res){
+  var _id = req.query.id;
+  if (_id == null || _id == ''){
+    res.json({error: 'ID不能为空'});
+  }else{
+    Card.findById(_id, function(err, data){
+      if(err){
+        res.json({error: '根据ID查询规则异常!'});
+      }else{
+        res.json({data: data});
+      }
+    });
+  }
+}
 
 // 更新规则
 tkdCtrol.ruleUpdate = function(req, res){
@@ -392,8 +407,6 @@ tkdCtrol.tkdCardList = function(req, res){
     }
   });
 }
-
-
 
 /**************************三国杀前端json end*****************************/
 
