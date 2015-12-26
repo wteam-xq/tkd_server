@@ -21,6 +21,8 @@ router.post('/tkd/ruleUpdate', tkdControl.ruleUpdate);
 router.post('/tkd/cardAdd', tkdControl.cardAdd);
 // 根据ID查找规则
 router.get('/tkd/getRuleById', tkdControl.getRuleById);
+// 根据ID查找卡牌
+router.get('/tkd/getCardById', tkdControl.getCardById);
 // 根据ID删除规则
 router.post('/tkd/rule/delete', tkdControl.deleteRuleById);
 // 上传图标

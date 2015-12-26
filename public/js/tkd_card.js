@@ -8,8 +8,8 @@ $(function(){
       // 新增卡牌面板
       $addCardPanel = $subPanel.find('.card_add_panel'),
       // 导航条
-      $adminCrumb = $('#admin-crumb'),
-      $toTkd = $('#to-tkd'),
+      $adminCrumb = $('#adminCrumb'),
+      $toTkd = $('#toTkd'),
       // 新增卡牌按钮
       $addCardBtn = $('#addCardBtn'),
       // 返回主页面按钮
@@ -38,6 +38,9 @@ $(function(){
       $backMain.on('click', function(){
         This.backMainPanel();
       });
+      $toTkd.on('click', function(){
+        This.backMainPanel();
+      });
       // 赋予上传事件
       $fileDom = $subPanel.find('.upload-file');
       fileUploadUtil.fileUploadInit($fileDom);
@@ -46,6 +49,8 @@ $(function(){
       $commitAddBtn.on('click', function(){
         This.addCardCommit();
       });
+      // 弹出更新卡牌UI
+      $mainMenu.find('.card-update').on('click', showUpdateCardPanel);
     },
     showNewCardPanel: function(){
       var $this = $(this),
@@ -56,7 +61,7 @@ $(function(){
       $addPanel.show();
       $mainMenu.hide();
       // 导航条出现
-      $adminCrumb.find('.active:first').html('添加规则');
+      $adminCrumb.find('.active:first').html('添加卡牌类型');
       $adminCrumb.show();
     },
     backMainPanel: function(){
@@ -87,6 +92,70 @@ $(function(){
       } 
     }
   };
+
+  // 弹出更新卡牌UI 
+  function showUpdateCardPanel(){
+    var $this = $(this),
+        _id = $this.attr('data-id'),
+        $updatePanel = $subPanel.find('.card-update-panel');
+    $subPanel.find('.row').hide();
+    $subPanel.show();
+    $updatePanel.show();
+    $mainMenu.hide();
+    // 导航条出现
+    $adminCrumb.find('.active:first').html('更新卡牌');
+    $adminCrumb.show();
+    // 清空上一面板数据
+    cardPageReset($updatePanel);
+    // 填充卡牌数据
+    fillCardPage($updatePanel, _id);
+  }
+  // 清空卡牌面板
+  function cardPageReset($cardPanel){
+    var $uploadTips = $cardPanel.find('.upload-tips'),
+        $uploadPro = $cardPanel.find('.upload-pro'),
+        $title = $cardPanel.find('.title'),
+        $desc = $cardPanel.find('.desc');
+    $title.val('');
+    $desc.val('');
+    $uploadTips.empty().hide();
+    $uploadPro.hide();
+    $uploadPro.find('.progress-bar').css('width', '0%').html('');
+  }
+  // 填充卡牌数据
+  function fillCardPage($cardPanel, _id){
+    var $tips = $cardPanel.find('.alert'),
+        $title = $cardPanel.find('.title'),
+        $desc = $cardPanel.find('.desc'),
+        $uploadTips = $cardPanel.find('.upload-tips'),
+        $icoPath = $cardPanel.find('.icoPath'),
+        $icoName = $cardPanel.find('.icoName'),
+        $cardId = $cardPanel.find('.card_id');
+
+    // 异步获取数据
+    $.get('tkd/getCardById', {id: _id},  function(res){
+      // 数据库规则内容
+      var _title, _desc, _ico_name, _ico_path, _data, _id;
+
+      if (res.error){
+        showTips(res.error, $tips);
+      }else{
+        _data = res.data;
+        _title = _data.title?_data.title:'';
+        _desc = _data.desc?_data.desc:'';
+        _ico_path = _data.ico?_data.ico:'';
+        _ico_name = _data.icoName?_data.icoName:'';
+        _id = _data._id?_data._id:'';
+        
+        $title.val(_title);
+        $desc.val(_desc);
+        $icoPath.val(_ico_path);
+        $icoName.val(_ico_name);
+        $uploadTips.show().html(_ico_name);
+        $cardId.val(_id);
+      }
+    });
+  }
 
   tkdCardObj.init();
 });

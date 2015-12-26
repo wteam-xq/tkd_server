@@ -141,9 +141,9 @@ $(function(){
     });
     // 更新规则按钮点击
     $main_menu.find('.rule-update').on('click', function(){
-      var $this = $(this);
-      var _id = $this.attr('data-id');
-      var $update_panel = $sub_panel.find('.rule-update-panel');
+      var $this = $(this),
+          _id = $this.attr('data-id'),
+          $update_panel = $sub_panel.find('.rule-update-panel');
       $sub_panel.find('.row').hide();
       $sub_panel.show();
       $update_panel.show();
@@ -214,10 +214,10 @@ $(function(){
 
     // 规则编辑页重置
     function rulePageReset($rule_panel){
-      var $upload_tips = $rule_panel.find('.upload-tips');
-      var $upload_pro = $rule_panel.find('.upload-pro');
-      var $title = $rule_panel.find('.title');
-      var $desc = $rule_panel.find('.desc');
+      var $upload_tips = $rule_panel.find('.upload-tips'),
+          $upload_pro = $rule_panel.find('.upload-pro'),
+          $title = $rule_panel.find('.title'),
+          $desc = $rule_panel.find('.desc');
       $title.val('');
       $desc.val('');
       $upload_tips.empty().hide();
@@ -228,13 +228,13 @@ $(function(){
 
     // 填充规则页面数据
     function fillRulePage($rule_panel, _id){
-      var $tips = $rule_panel.find('.alert');
-      var $title = $rule_panel.find('.title');
-      var $desc = $rule_panel.find('.desc');
-      var $upload_tips = $rule_panel.find('.upload-tips');
-      var $ico_path = $rule_panel.find('.icoPath');
-      var $ico_name = $rule_panel.find('.icoName');
-      var $rule_id = $rule_panel.find('.ruleId');
+      var $tips = $rule_panel.find('.alert'),
+          $title = $rule_panel.find('.title'),
+          $desc = $rule_panel.find('.desc'),
+          $upload_tips = $rule_panel.find('.upload-tips'),
+          $ico_path = $rule_panel.find('.icoPath'),
+          $ico_name = $rule_panel.find('.icoName'),
+          $rule_id = $rule_panel.find('.ruleId');
 
       // 异步获取数据
       $.get('tkd/getRuleById', {id: _id},  function(res){
