@@ -25,6 +25,8 @@ router.get('/tkd/getRuleById', tkdControl.getRuleById);
 router.get('/tkd/getCardById', tkdControl.getCardById);
 // 根据ID删除规则
 router.post('/tkd/rule/delete', tkdControl.deleteRuleById);
+// 根据ID删除卡牌
+router.post('/tkd/card/delete', tkdControl.deleteCardById);
 // 上传图标
 router.post('/upload/ico', tkdControl.uploadIco);
 /*个人简历后台列表页*/

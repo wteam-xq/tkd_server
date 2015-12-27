@@ -13,9 +13,9 @@ $(function(){
     // 弹出框
     $confirm_dialog = $main_menu.find('.modal'),
     // 弹出框提示
-    $remove_tips = $('#removeTips'),
+    $remove_tips = $('#removeTips');
     // 增加记录 是否清空原内容标志位
-    add_reset = false;
+    // add_reset = false;
 
   // 初始化函数
   init();
@@ -37,28 +37,28 @@ $(function(){
     // 弹出框删除项请求
     $remove_submit.on('click', function(){
       // 异步请求
-      var $this = $(this);
-      var _id = $selected_id.val();
-      var _type = $selected_id.attr('data-type');
-      var delete_url = '';
+      var $this = $(this),
+          _id = $selected_id.val(),
+          _type = $selected_id.attr('data-type'),
+          delete_url = '';
 
-      // 删除类型
-      switch(_type){
-        case 'rule':
-          delete_url = '/admin/tkd/rule/delete';
-          break;
-        case 'card':
-          delete_url = '/admin/tkd/card/delete';
-          break;
-        case 'heros':
-          delete_url = '/admin/tkd/heros/delete';
-          break;
-        case 'strategy':
-          delete_url = '/admin/tkd/strategy/delete';
-          break;
-        default:
-          delete_url = '/admin/tkd/rule/delete';
-      }
+      delete_url = '/admin/tkd/rule/delete';
+      // switch(_type){
+      //   case 'rule':
+      //     delete_url = '/admin/tkd/rule/delete';
+      //     break;
+      //   case 'card':
+      //     delete_url = '/admin/tkd/card/delete';
+      //     break;
+      //   case 'heros':
+      //     delete_url = '/admin/tkd/heros/delete';
+      //     break;
+      //   case 'strategy':
+      //     delete_url = '/admin/tkd/strategy/delete';
+      //     break;
+      //   default:
+      //     delete_url = '/admin/tkd/rule/delete';
+      // }
 
       $.post(delete_url, {id: _id}, function(data){
         if (data.error){
@@ -135,9 +135,9 @@ $(function(){
       $admin_crumb.find('.active:first').html('添加规则');
       $admin_crumb.show();
       // 如果已经提交成功过， 清空编辑页
-      if (add_reset){
-        rulePageReset($add_panel);
-      }
+      // if (add_reset){
+      //   rulePageReset($add_panel);
+      // }
     });
     // 更新规则按钮点击
     $main_menu.find('.rule-update').on('click', function(){

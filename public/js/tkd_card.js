@@ -10,10 +10,14 @@ $(function(){
       // 导航条
       $adminCrumb = $('#adminCrumb'),
       $toTkd = $('#toTkd'),
-      // 新增卡牌按钮
-      $addCardBtn = $('#addCardBtn'),
+      // 弹出框
+      $confirmDialog = $mainMenu.find('.modal'),
+      // 弹出框提示
+      $removeTips = $('#removeips'),
+      // 存储待删除ID隐藏域
+      $selectedId = $mainMenu.find('#selectId'),
       // 返回主页面按钮
-      $backMain = $subPanel.find('.back-main');
+      $backMain = $subPanel.find('.back_main');
   
   // 显示提示内容
   function showTips(tips, $tips){
@@ -25,15 +29,29 @@ $(function(){
   var tkdCardObj = {
     init: function(){
       this.initEvt();
+      // bootstrap 居中
+      $confirmDialog.on('shown.bs.modal', function(){
+        var $this = $(this),
+            $modalDialog = $this.find('.modal-dialog'),
+            mTop = ( $(document).height() - $modalDialog.height() )/2;
+        $modalDialog.css({'margin': mTop + 'px auto'});
+      });
     },
     initEvt: function(){
       var This = this,
+          // 删除卡牌按钮
+          $removeBtn = $('#card').find('.remove_card_btn'),
+          $removeSubmit = $('#removeSubmit'),
+          // 新增卡牌按钮
+          $addCardBtn = $('#add_card_btn'),
           $commitAddBtn,
           $fileDom;
 
       $addCardBtn.on('click', function(){
         This.showNewCardPanel();
       });
+      $removeBtn.on('click', showConfirmPanel);
+      $removeSubmit.on('click', confirmRemoveCard);
       // 二级页面返回一级页面按钮点击
       $backMain.on('click', function(){
         This.backMainPanel();
@@ -49,6 +67,7 @@ $(function(){
       $commitAddBtn.on('click', function(){
         This.addCardCommit();
       });
+
       // 弹出更新卡牌UI
       $mainMenu.find('.card-update').on('click', showUpdateCardPanel);
     },
@@ -155,6 +174,33 @@ $(function(){
         $cardId.val(_id);
       }
     });
+  }
+  // 显示确认删除提示
+  function showConfirmPanel(){
+    var $this = $(this),
+        _id = $this.attr('data-id');
+
+    $selectedId.val(_id);
+    $selectedId.attr('data-type', 'card');
+    // 改变提示内容
+    $removeTips.html('确定要删除该类型卡牌吗？');
+    $confirmDialog.modal({backdrop:'static'});
+  }
+  // 确认删除卡牌
+  function confirmRemoveCard(){
+    // 异步请求
+    var $this = $(this),
+        _id = $selectedId.val(),
+        delete_url = '/admin/tkd/card/delete';
+
+    $.post(delete_url, {id: _id}, function(data){
+      if (data.error){
+        $('#removeTips').html('删除异常:' + data.error + '  请刷新重试。');
+      }else{
+        // 删除完后刷新页面
+        window.location.reload();
+      }
+    }, 'json');
   }
 
   tkdCardObj.init();

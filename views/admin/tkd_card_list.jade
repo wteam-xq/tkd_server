@@ -21,7 +21,7 @@ block content
     .tab-content
       // 主页面点击删除的ID
       input(type='hidden' value='' id='selectId')
-      .tab-pane(class="fade item-list" id="card") 规则内容
+      .tab-pane(class="fade item-list" id="rule") 规则内容
       .list-group.tab-pane(class="fade in active item-list" id="card") 
         table.table.table-bordered.table-hover
           thead
@@ -42,7 +42,7 @@ block content
                   td 
                     a.link.card-update(href='javascript:void(0);' data-id='#{card._id}') 更新
                   td
-                    a(data-id='#{card._id}' class="removeCard").btn.btn-danger 删除
+                    a(data-id='#{card._id}' class="remove_card_btn").btn.btn-danger 删除
                     a(data-id='#{card._id}' class="cardList").btn.btn-primary  列表
             else
               tr 
@@ -52,7 +52,7 @@ block content
                 td
                 td
             
-        a(id='addCardBtn').btn.btn-primary 添加 
+        a(id='add_card_btn').btn.btn-primary 添加 
       .tab-pane(class="fade item-list" id="heros") 武将内容
       .tab-pane(class="fade item-list" id="strategy") 攻略内容
 
@@ -67,7 +67,7 @@ block content
             h4.modal-title 删除提示
           
           .modal-body
-            p(id='removeTips') 确定要删除该卡牌吗？
+            p(id='removeips') 确定要删除该卡牌吗？
           
           .modal-footer
             button(type="button" data-dismiss="modal" id="cancelRemove").btn.btn-default 关闭
@@ -106,7 +106,7 @@ block content
             .commit_btn.btn.btn-primary(data-type='add') 提交添加
             //- button(type="submit").btn.btn-primary 提交添加
           .col-md-2
-            a.back-main.btn.btn-primary 返回
+            a.back_main.btn.btn-primary 返回
     .row.unvisible.card-update-panel
       form.form-horizontal(method="POST" action="tkd/cardUpdate" name='cardform')
         input(type='hidden' class='card_id' name='id' value='')

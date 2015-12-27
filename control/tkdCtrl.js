@@ -286,6 +286,17 @@ tkdCtrol.deleteRuleById = function(req, res){
     }
   });
 };
+// 删除卡牌
+tkdCtrol.deleteCardById = function(req, res){
+  var id = req.body.id;
+  Card.deleteInfo(id, function(err, updateCount){
+    if (err){
+      res.json({error: '删除规则错误', code:'500'});
+    }else{
+      res.json({success:'true'});
+    }
+  });
+};
 
 // 添加卡牌
 tkdCtrol.cardAdd = function(req, res){
