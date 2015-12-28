@@ -7,6 +7,8 @@ $(function(){
       $subPanel = $('#subPanel'),
       // 新增卡牌面板
       $addCardPanel = $subPanel.find('.card_add_panel'),
+      // 更新卡牌面板
+      $updateCardPanel = $subPanel.find('.card_update_panel'),
       // 导航条
       $adminCrumb = $('#adminCrumb'),
       $toTkd = $('#toTkd'),
@@ -45,6 +47,7 @@ $(function(){
           // 新增卡牌按钮
           $addCardBtn = $('#add_card_btn'),
           $commitAddBtn,
+          $commitUpdateBtn,
           $fileDom;
 
       $addCardBtn.on('click', function(){
@@ -63,21 +66,23 @@ $(function(){
       $fileDom = $subPanel.find('.upload-file');
       fileUploadUtil.fileUploadInit($fileDom);
       // 新增卡牌事件
-      $commitAddBtn = $subPanel.find('.commit_btn');
+      $commitAddBtn = $addCardPanel.find('.commit_btn');
       $commitAddBtn.on('click', function(){
-        This.addCardCommit();
+        submitCardCommit($addCardPanel);
       });
-
+      // 提交更新卡牌请求
+      $commitUpdateBtn = $updateCardPanel.find('.commit_btn');
+      $commitUpdateBtn.on('click', function(){
+        submitCardCommit($updateCardPanel);
+      });
       // 弹出更新卡牌UI
       $mainMenu.find('.card-update').on('click', showUpdateCardPanel);
     },
     showNewCardPanel: function(){
-      var $this = $(this),
-          $addPanel = $subPanel.find('.card_add_panel');
-
+      var $this = $(this);
       $subPanel.find('.row').hide();
       $subPanel.show();
-      $addPanel.show();
+      $addCardPanel.show();
       $mainMenu.hide();
       // 导航条出现
       $adminCrumb.find('.active:first').html('添加卡牌类型');
@@ -88,46 +93,25 @@ $(function(){
       $mainMenu.show();
       // 导航条隐藏
       $adminCrumb.hide();
-    },
-    addCardCommit: function(){
-      var $panelForm = $addCardPanel.find('form'),
-          _title = $panelForm.find('.title').val(),
-          _desc = $panelForm.find('.desc').val(),
-          _ico_path = $panelForm.find('.icoPath').val(),
-          $tips = $panelForm.find('.alert');
-
-      // 提交字段是否齐全校验
-      if (_title == ''){
-        showTips('标题不能为空！', $tips);
-        return false;
-      }else if (_desc == ''){
-        showTips('简介不能为空！', $tips);
-        return false;
-      }else if(_ico_path == ''){
-        showTips('图标不能为空！', $tips);
-        return false;
-      }else{
-        $panelForm.submit();
-      } 
     }
   };
 
   // 弹出更新卡牌UI 
   function showUpdateCardPanel(){
     var $this = $(this),
-        _id = $this.attr('data-id'),
-        $updatePanel = $subPanel.find('.card-update-panel');
+        _id = $this.attr('data-id');
+
     $subPanel.find('.row').hide();
     $subPanel.show();
-    $updatePanel.show();
+    $updateCardPanel.show();
     $mainMenu.hide();
     // 导航条出现
     $adminCrumb.find('.active:first').html('更新卡牌');
     $adminCrumb.show();
     // 清空上一面板数据
-    cardPageReset($updatePanel);
+    cardPageReset($updateCardPanel);
     // 填充卡牌数据
-    fillCardPage($updatePanel, _id);
+    fillCardPage($updateCardPanel, _id);
   }
   // 清空卡牌面板
   function cardPageReset($cardPanel){
@@ -201,6 +185,28 @@ $(function(){
         window.location.reload();
       }
     }, 'json');
+  }
+  // 提交卡牌请求（更新、新增）
+  function submitCardCommit($cardFormParent){
+    var $panelForm = $cardFormParent.find('form'),
+        _title = $panelForm.find('.title').val(),
+        _desc = $panelForm.find('.desc').val(),
+        _ico_path = $panelForm.find('.icoPath').val(),
+        $tips = $panelForm.find('.alert');
+
+    // 提交字段是否齐全校验
+    if (_title == ''){
+      showTips('标题不能为空！', $tips);
+      return false;
+    }else if (_desc == ''){
+      showTips('简介不能为空！', $tips);
+      return false;
+    }else if(_ico_path == ''){
+      showTips('图标不能为空！', $tips);
+      return false;
+    }else{
+      $panelForm.submit();
+    }
   }
 
   tkdCardObj.init();

@@ -220,6 +220,26 @@ tkdCtrol.ruleAdd = function(req, res){
     }
   });
 };
+// 添加卡牌
+tkdCtrol.cardAdd = function(req, res){
+  var card = {
+    title: req.body.title || '',
+    desc: req.body.desc || '',
+    ico: req.body.icoPath || '',
+    icoName: req.body.icoName || ''
+  };
+  if (!req.body.title) {
+    res.redirect('/admin/tkd');
+  }
+  Card.createInfo(card, function(error, result){
+    if (error){
+      // 写一错误显示页面， 错误信息在该页面显示之
+      appLog.writeErrorLog("tkdCtrl.js", "添加卡牌至数据库异常");
+    }else{
+      res.redirect('/admin/tkd?tkd_type=card');
+    }
+  });
+};
 
 // 根据ID获取规则数据
 tkdCtrol.getRuleById = function(req, res){
@@ -273,6 +293,24 @@ tkdCtrol.ruleUpdate = function(req, res){
     }
   });
 };
+// 更新卡牌
+tkdCtrol.cardUpdate = function(req, res){
+  var id = req.body.id;
+
+  var card = {
+    title: req.body.title || '',
+    desc: req.body.desc || '',
+    ico: req.body.icoPath || '',
+    icoName: req.body.icoName || ''
+  };
+  Card.updateInfo(id, card, function(err, updateCount){
+    if (err){
+      appLog.writeErrorLog("tkdCtrl.js", "更新卡牌数据库操作异常，错误码：" + updateCount);
+    }else{
+      res.redirect('/admin/tkd?tkd_type=card');
+    }
+  });
+};
 
 // 删除规则
 tkdCtrol.deleteRuleById = function(req, res){
@@ -298,26 +336,6 @@ tkdCtrol.deleteCardById = function(req, res){
   });
 };
 
-// 添加卡牌
-tkdCtrol.cardAdd = function(req, res){
-  var card = {
-    title: req.body.title || '',
-    desc: req.body.desc || '',
-    ico: req.body.icoPath || '',
-    icoName: req.body.icoName || ''
-  };
-  if (!req.body.title) {
-    res.redirect('/admin/tkd');
-  }
-  Card.createInfo(card, function(error, result){
-    if (error){
-      // 写一错误显示页面， 错误信息在该页面显示之
-      appLog.writeErrorLog("tkdCtrl.js", "添加卡牌至数据库异常");
-    }else{
-      res.redirect('/admin/tkd?tkd_type=card');
-    }
-  });
-};
 
 /**************************三国杀后台逻辑end*****************************/
 

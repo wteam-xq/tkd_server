@@ -19,6 +19,7 @@ router.post('/tkd/ruleAdd', tkdControl.ruleAdd);
 router.post('/tkd/ruleUpdate', tkdControl.ruleUpdate);
 // 卡牌添加、卡牌更新
 router.post('/tkd/cardAdd', tkdControl.cardAdd);
+router.post('/tkd/cardUpdate', tkdControl.cardUpdate);
 // 根据ID查找规则
 router.get('/tkd/getRuleById', tkdControl.getRuleById);
 // 根据ID查找卡牌

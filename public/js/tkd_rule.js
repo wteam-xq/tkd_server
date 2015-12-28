@@ -168,21 +168,21 @@ $(function(){
     });
 
     $commit_update.on('click', function(){
-      var $this = $(this);
-      var $update_panel = $this.parents('div.row');
+      var $this = $(this),
+          $update_panel = $this.parents('div.row');
       submitRule($update_panel, 'update');
     });
 
     // 规则提交校验
     function submitRule($rule_panel, _type){
-      var $panel_form = $rule_panel.find('form');
-      var $ueContent = $rule_panel.find('.ueContent');
-      var $ueTxt = $rule_panel.find('.ueTxt');
-      var _title = $panel_form.find('.title').val();
-      var _desc = $panel_form.find('.desc').val();
-      var _ico_path = $panel_form.find('.icoPath').val();
-      var $tips = $panel_form.find('.alert');
-      var _content, _content_txt;
+      var $panel_form = $rule_panel.find('form'),
+          $ueContent = $rule_panel.find('.ueContent'),
+          $ueTxt = $rule_panel.find('.ueTxt'),
+          _title = $panel_form.find('.title').val(),
+          _desc = $panel_form.find('.desc').val(),
+          _ico_path = $panel_form.find('.icoPath').val(),
+          $tips = $panel_form.find('.alert'),
+          _content, _content_txt;
 
       if (_type == 'add'){
         _content = $Ue.getContent();
@@ -191,7 +191,6 @@ $(function(){
         _content = $Ue2.getContent();
         _content_txt = $Ue2.getContentTxt();
       }
-
       $ueContent.val(_content);
       $ueTxt.val(_content_txt);
       // 提交字段是否齐全校验
