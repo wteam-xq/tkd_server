@@ -43,7 +43,7 @@ block content
                     a.link.card-update(href='javascript:void(0);' data-id='#{card._id}') 更新
                   td
                     a(data-id='#{card._id}' class="remove_card_btn").btn.btn-danger 删除
-                    a(data-id='#{card._id}' class="cardList").btn.btn-primary  列表
+                    a(data-id='#{card._id}' class="card_list_btn").btn.btn-primary  列表
             else
               tr 
                 td 暂无数据
@@ -137,10 +137,40 @@ block content
           .col-md-2
             a.back_main.btn.btn-primary 返回
     //- 卡牌列表
-    .row.unvisible
+    .row.unvisible.card_detial_list_panel
+      table.table.table-bordered.table-hover
+        thead
+          tr.info
+            th 标题
+            th 内容简介
+            th 图标
+            th 更新
+            th 操作
+        tbody
+          tr 
+            td 暂无数据
+            td 
+            td
+            td
+              td
+      a.back_main.btn.btn-primary 返回
+      a(id='addDetailBtn').btn.btn-primary.add_detail_btn 添加
 
   //- 三级页面（新增、更新 卡牌）
   .container.unvisible(id="childPanel")
+    .row.add_detail_card_panel
+      form.form-horizontal(method="POST" action="tkd/addCardDetail" name='detailform')
+        .alert.alert-warning.hidden(id='addTips' role='alert') 警告内容
+        .form-group
+          label.col-md-1.control-label 标题
+          .col-md-10
+            input(type="text" class="title" name="title").form-control
+        .form-group
+          .col-md-1.col-md-offset-1
+            .commit_btn.btn.btn-primary(data-type='add') 提交添加
+            //- button(type="submit").btn.btn-primary 提交添加
+          .col-md-2
+      a.back_sub_panel.btn.btn-primary 返回    
 
 
   // 加入上传插件

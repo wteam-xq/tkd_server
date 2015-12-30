@@ -220,6 +220,7 @@ tkdCtrol.ruleAdd = function(req, res){
     }
   });
 };
+
 // 添加卡牌
 tkdCtrol.cardAdd = function(req, res){
   var card = {
@@ -239,6 +240,19 @@ tkdCtrol.cardAdd = function(req, res){
       res.redirect('/admin/tkd?tkd_type=card');
     }
   });
+};
+// 添加卡牌详情
+tkdCtrol.addCardDetail = function(req, res){
+  var card = {
+    title: req.body.title || '',
+    htmlCont: req.body.htmlCont || '',
+    anchorId: req.body.anchorId || ''
+  };
+  if (!req.body.title) {
+    res.redirect('/admin/tkd');
+  }
+  // 卡牌详情添加
+  
 };
 
 // 根据ID获取规则数据
