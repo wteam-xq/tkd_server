@@ -243,16 +243,26 @@ tkdCtrol.cardAdd = function(req, res){
 };
 // 添加卡牌详情
 tkdCtrol.addCardDetail = function(req, res){
-  var card = {
+  var cardDetail = {
     title: req.body.title || '',
-    htmlCont: req.body.htmlCont || '',
-    anchorId: req.body.anchorId || ''
+    htmlCont: req.body.content || '',
+    anchorId: req.body.anchorId || '',
+    ico: req.body.icoPath || '',
+    icoName: req.body.icoName || '',
+    typeId: req.body.typeId || ''
   };
   if (!req.body.title) {
     res.redirect('/admin/tkd');
   }
   // 卡牌详情添加
-  
+  Card.addCardDetail(cardDetail, function(error, result){
+    if (error){
+      // 写一错误显示页面， 错误信息在该页面显示之
+      appLog.writeErrorLog("tkdCtrl.js", "添加卡牌详情至数据库异常");
+    }else{
+      res.redirect('/admin/tkd?tkd_type=card');
+    }
+  });
 };
 
 // 根据ID获取规则数据
