@@ -31,7 +31,7 @@ router.post('/test_post', frontControl.testPost);
 // 三国杀规则列表
 router.get('/tkd_rules', tkdControl.tkdRulesList);
 router.get('/tkd_rule', tkdControl.getRuleById);
-// 三国杀规则列表
+// 三国杀卡牌列表
 router.get('/tkd_card', tkdControl.getCardById);
 router.get('/tkd_cards', tkdControl.tkdCardList);
 

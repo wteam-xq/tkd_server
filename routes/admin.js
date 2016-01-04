@@ -14,22 +14,27 @@ router.get('/index', userCtrol.adminIndex);
 /*三国杀后台列表页*/
 router.get('/tkd', tkdControl.tkdList);
 router.get('/tkd/index', tkdControl.tkdList);
+router.get('/tkd/cardDetailList', tkdControl.cardDetailList);
+
+
 // 规则添加、规则更新
 router.post('/tkd/ruleAdd', tkdControl.ruleAdd);
 router.post('/tkd/ruleUpdate', tkdControl.ruleUpdate);
+// 根据ID查找规则
+router.get('/tkd/getRuleById', tkdControl.getRuleById);
+// 根据ID删除规则
+router.post('/tkd/rule/delete', tkdControl.deleteRuleById);
+
 // 卡牌添加、卡牌更新
 router.post('/tkd/cardAdd', tkdControl.cardAdd);
 router.post('/tkd/cardUpdate', tkdControl.cardUpdate);
-// 卡牌详情添加、卡牌详情更新
-router.post('/tkd/addCardDetail', tkdControl.addCardDetail);
-// 根据ID查找规则
-router.get('/tkd/getRuleById', tkdControl.getRuleById);
 // 根据ID查找卡牌
 router.get('/tkd/getCardById', tkdControl.getCardById);
-// 根据ID删除规则
-router.post('/tkd/rule/delete', tkdControl.deleteRuleById);
 // 根据ID删除卡牌
 router.post('/tkd/card/delete', tkdControl.deleteCardById);
+// 卡牌详情添加、卡牌详情更新
+router.post('/tkd/addCardDetail', tkdControl.addCardDetail);
+
 // 上传图标
 router.post('/upload/ico', tkdControl.uploadIco);
 /*个人简历后台列表页*/

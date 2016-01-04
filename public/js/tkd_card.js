@@ -51,13 +51,13 @@ $(function(){
           // 新增卡牌按钮
           $addCardBtn = $('#add_card_btn'),
           // 三级页面返回按钮
-          $addDetailBack = $childPanel.find('.back_sub_panel'),
+          // $addDetailBack = $childPanel.find('.back_sub_panel'),
           // 显示卡牌列表按钮
-          $detailListBtn = $('#card').find('.card_list_btn'),
+          // $detailListBtn = $('#card').find('.card_list_btn'),
           // 新增卡牌详情按钮
-          $addDetailBtn = $subPanel.find('#addDetailBtn'),
+          // $addDetailBtn = $subPanel.find('#addDetailBtn'),
           // 提交新增卡牌按钮
-          $commitDetailBtn = $childPanel.find('.commit_btn'),
+          // $commitDetailBtn = $childPanel.find('.commit_btn'),
           $commitAddBtn,
           $commitUpdateBtn,
           $fileDom;
@@ -90,11 +90,11 @@ $(function(){
       // 弹出更新卡牌UI
       $mainMenu.find('.card-update').on('click', showUpdateCardPanel);
       // 展示 卡牌详情列表
-      $detailListBtn.on('click', showDetailList);
-      $addDetailBtn.on('click', showAddDetailPanel);
+      // $detailListBtn.on('click', showDetailList);
+      // $addDetailBtn.on('click', showAddDetailPanel);
       // 从三级页面返回二级页面
-      $addDetailBack.on('click', backSubPanel);
-      $commitDetailBtn.on('click', commitCardDetail);
+      // $addDetailBack.on('click', backSubPanel);
+      // $commitDetailBtn.on('click', commitCardDetail);
     },
     showNewCardPanel: function(){
       var $this = $(this);

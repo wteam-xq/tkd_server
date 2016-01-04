@@ -1,9 +1,4 @@
 @charset "utf-8";
 
-body {
-  background: #fcfcfc;
-}
-.dev-tips{
-  text-align:center;
-  margin: 30px 0px;
-}
+body { background: #fcfcfc; }
+.dev-tips{ text-align:center; margin: 30px 0px; }

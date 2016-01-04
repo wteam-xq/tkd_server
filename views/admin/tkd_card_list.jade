@@ -43,7 +43,7 @@ block content
                     a.link.card-update(href='javascript:void(0);' data-id='#{card._id}') 更新
                   td
                     a(data-id='#{card._id}' class="remove_card_btn").btn.btn-danger 删除
-                    a(data-id='#{card._id}' class="card_list_btn").btn.btn-primary  列表
+                    a(href="/admin/tkd/cardDetailList?typeId=#{card._id}").btn.btn-primary  列表
             else
               tr 
                 td 暂无数据
@@ -152,7 +152,7 @@ block content
             td 
             td
             td
-              td
+            td
       a.back_main.btn.btn-primary 返回
       a(id='addDetailBtn').btn.btn-primary.add_detail_btn 添加
 

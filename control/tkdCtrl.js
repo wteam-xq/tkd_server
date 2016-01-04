@@ -130,6 +130,28 @@ tkdCtrol.tkdList = function(req, res) {
     });
   }
 };
+// 卡牌详情列表
+tkdCtrol.cardDetailList = function(req, res){
+  var cardTypeId = req.query.typeId?req.query.typeId:"",
+      detailList = [];
+
+  if (cardTypeId == ""){
+    res.render('admin/tkd_card_detail_list', { 
+      "title": '三国杀卡牌详情列表页',
+      "detailList": detailList,
+      "cardTypeId": cardTypeId
+    });
+  } else {
+    console.log('查找数据库');
+    res.render('admin/tkd_card_detail_list', { 
+      "title": '三国杀卡牌详情列表页',
+      "detailList": detailList,
+      "cardTypeId": cardTypeId
+    });
+  }
+
+};
+
 // 上传图标
 tkdCtrol.uploadIco = function(req, res) {
   // parse a file upload
@@ -260,7 +282,7 @@ tkdCtrol.addCardDetail = function(req, res){
       // 写一错误显示页面， 错误信息在该页面显示之
       appLog.writeErrorLog("tkdCtrl.js", "添加卡牌详情至数据库异常");
     }else{
-      res.redirect('/admin/tkd?tkd_type=card');
+      res.redirect('/admin/tkd/cardDetailList?typeId=' + cardDetail.typeId);
     }
   });
 };

@@ -1,0 +1,88 @@
+extends ../layout
+
+block content
+  include header
+  
+  include breadcrumb
+
+  //- 页面提示内容弹出层
+  .modal(id='removeConfirm')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button(type="button" data-dismiss="modal").close
+            span(aria-hidden="true") &times;
+            span.sr-only Close
+          h4.modal-title 删除提示
+        
+        .modal-body
+          p(id='removeips') 确定要删除该卡牌吗？
+        
+        .modal-footer
+          button(type="button" data-dismiss="modal" id="cancelRemove").btn.btn-default 关闭
+          button(type="button" id="removeSubmit").btn.btn-primary 确定
+
+  //- 卡牌列表
+  .container#subPanel
+    .row.card_detial_list_panel
+      table.table.table-bordered.table-hover
+        thead
+          tr.info
+            th 标题
+            th 内容简介
+            th 图标
+            th 更新
+            th 操作
+        tbody
+          tr 
+            td 暂无数据
+            td 
+            td
+            td
+            td
+      a(href="/admin/tkd?tkd_type=card" target="_self").back_main.btn.btn-primary 返回
+      a(id='addDetailBtn').btn.btn-primary.add_detail_btn 添加
+
+  //- 新增、更新 卡牌
+  .container.unvisible#childPanel
+    input(type="hidden" id="cardTypeId" value="#{cardTypeId}")
+    .row.add_detail_card_panel
+      form.form-horizontal(method="POST" action="tkd/addCardDetail" name='detailform')
+        input.card_type_id(type="hidden" value="" name="typeId")
+        .alert.alert-warning.hidden(role='alert') 警告内容
+        .form-group
+          label.col-md-1.control-label 标题
+          .col-md-10
+            input(type="text" class="title" name="title").form-control
+        .form-group
+          label.col-md-1.control-label 内容
+          .col-md-10
+            textarea(class="content" name="content").form-control
+        .form-group
+          label.col-md-1.control-label 图标
+          .col-md-2.prelative
+            //- 隐藏上传图控件, data-type card-add:  新增卡牌， card-update： 更新卡牌
+            input.upload-file.form-control.unvisibility.btn.btn-primary(type="file" name="ico" value='点击上传图标')
+            input.icoPath(type="hidden" name='icoPath' value='')
+            .btn.btn-primary(class="upload-ico").form-control 点击上传图标
+          .col-md-2
+            .upload-tips.unvisible 图标上传提示
+            input.icoName(type='hidden' name='icoName' value='')
+          .col-md-4.col-md-offset-2
+            .upload-pro.unvisible.progress
+              .progress-bar(role="progressbar")
+        .form-group
+          .col-md-1.col-md-offset-1
+            .commit_btn.btn.btn-primary(data-type='add') 提交添加
+            //- button(type="submit").btn.btn-primary 提交添加
+          .col-md-2
+      a.back_sub_panel.btn.btn-primary 返回    
+
+  // 加入上传插件
+  script(type="text/javascript",src="/components/jquery.ui.widget.js")
+  script(type="text/javascript",src="/components/jquery.iframe-transport.js")
+  script(type="text/javascript",src="/components/jquery.fileupload.js")
+  // 上传公共脚本
+  script(type="text/javascript",src="/js/fileUpload.js")
+  //导入tkd处理脚本
+  script(src="/js/tkd_card_detail.js")
