@@ -1,3 +1,8 @@
+/*
+author: wteamxq
+createDate: 2015-12-16
+desc: 本项目bug跟踪日志处理类
+ */
 var fs = require('fs');
 var logPath = "public/server_log/log.txt";
 

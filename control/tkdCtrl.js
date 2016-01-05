@@ -3,10 +3,82 @@ var tkdCtrol = {},
     formidable = require('formidable'),
     fs = require('fs'),
     appLog = require('../common/app_log.js'),
+    appUtil = require('../common/utils.js'),
     Card = require('../models/tkd_card'),
     Rule = require('../models/tkd_rule');
 
 /**************************三国杀后台逻辑************************************/
+// 上传图标
+tkdCtrol.uploadIco = function(req, res) {
+  // parse a file upload
+  var form = new formidable.IncomingForm(),files=[],fields=[],docs=[];
+  
+  //存放目录
+  form.uploadDir = 'public/upload_imgs/';
+
+  // 接收到前端传过来的文件时事件
+  form.on('field', function(field, value) {
+    fields.push([field, value]);
+  // 前端文件读取时事件
+  }).on('file', function(field, file) {
+    var types = file.name.split('.'),
+        date = new Date(),
+        ms = Date.parse(date),
+        // 传回给前端的图片地址
+        _url = "public/upload_imgs/" + ms + '_'+ file.name;
+
+    file.url = _url;
+    files.push([field, file]);
+    docs.push(file);
+
+    fs.renameSync(file.path, _url);
+  // 文件读取结束事件
+  }).on('end', function() {
+    // 自定义返回前台数据
+    var _files = [],
+        _file = null,
+        _temp_file = null,
+        i,
+        out = null,
+        sout = null;
+    
+    res.writeHead(200, {
+      'content-type': 'text/plain'
+    });
+
+    for(i = 0; i < docs.length; i++){
+      _file = docs[i];
+      // 地址替换
+      _url = _file.url.replace('public', '');
+
+      _temp_file = {
+        name: _file.name,
+        path: _file.path,
+        size: _file.size,
+        type: _file.type,
+        url: _url
+      };
+      _files.push(_temp_file);
+    }
+    out = {
+      Resopnse:{
+        'result-code':0,
+        timeStamp:new Date()
+      },
+      files: _files
+    };
+    sout = JSON.stringify(out);
+    res.end(sout);
+  });
+
+  // 文件解析事件
+  form.parse(req, function(err, fields, files) {
+    if(err){
+      appLog.writeErrorLog("tkdCtrl.js", "上传图片文件解析异常");
+    }
+  });
+};
+
 // 查询列表(规则、卡牌、武将、攻略)
 tkdCtrol.tkdList = function(req, res) {
   var pageNum = req.query.pageNum?parseInt(req.query.pageNum,10):1,
@@ -130,94 +202,6 @@ tkdCtrol.tkdList = function(req, res) {
     });
   }
 };
-// 卡牌详情列表
-tkdCtrol.cardDetailList = function(req, res){
-  var cardTypeId = req.query.typeId?req.query.typeId:"",
-      detailList = [];
-
-  if (cardTypeId == ""){
-    res.render('admin/tkd_card_detail_list', { 
-      "title": '三国杀卡牌详情列表页',
-      "detailList": detailList,
-      "cardTypeId": cardTypeId
-    });
-  } else {
-    console.log('查找数据库');
-    res.render('admin/tkd_card_detail_list', { 
-      "title": '三国杀卡牌详情列表页',
-      "detailList": detailList,
-      "cardTypeId": cardTypeId
-    });
-  }
-
-};
-
-// 上传图标
-tkdCtrol.uploadIco = function(req, res) {
-  // parse a file upload
-  var form = new formidable.IncomingForm(),files=[],fields=[],docs=[];
-  
-  //存放目录
-  form.uploadDir = 'public/upload_imgs/';
-
-  // 接收到前端传过来的文件时事件
-  form.on('field', function(field, value) {
-    fields.push([field, value]);
-  // 前端文件读取时事件
-  }).on('file', function(field, file) {
-    var types = file.name.split('.');
-    var date = new Date();
-    var ms = Date.parse(date);
-    // 传回给前端的图片地址
-    var _url = "public/upload_imgs/" + ms + '_'+ file.name;
-
-    file.url = _url;
-    files.push([field, file]);
-    docs.push(file);
-
-    fs.renameSync(file.path, _url);
-  // 文件读取结束事件
-  }).on('end', function() {
-    
-    res.writeHead(200, {
-      'content-type': 'text/plain'
-    });
-    // 自定义返回前台数据
-    var _files = [];
-    var _file = null;
-    var _temp_file = null;
-    for(var i = 0; i < docs.length; i++){
-      _file = docs[i];
-      // 地址替换
-      _url = _file.url.replace('public', '');
-
-      _temp_file = {
-        name: _file.name,
-        path: _file.path,
-        size: _file.size,
-        type: _file.type,
-        url: _url
-      };
-      _files.push(_temp_file);
-    }
-    var out = {
-      Resopnse:{
-        'result-code':0,
-        timeStamp:new Date()
-      },
-      files: _files
-    };
-    var sout = JSON.stringify(out);
-    res.end(sout);
-  });
-
-  // 文件解析事件
-  form.parse(req, function(err, fields, files) {
-    if(err){
-      appLog.writeErrorLog("tkdCtrl.js", "上传图片文件解析异常");
-    }
-  });
-};
 
 // 添加规则
 tkdCtrol.ruleAdd = function(req, res){
@@ -239,6 +223,54 @@ tkdCtrol.ruleAdd = function(req, res){
       appLog.writeErrorLog("tkdCtrl.js", "添加规则至数据库异常");
     }else{
       res.redirect('/admin/tkd');
+    }
+  });
+};
+// 根据ID获取规则数据
+tkdCtrol.getRuleById = function(req, res){
+  var _id = req.query.id;
+  if (_id == null || _id == ''){
+    res.json({error: 'ID不能为空'});
+  }else{
+    Rule.findById(_id, function(err, data){
+      if(err){
+        res.json({error: '根据ID查询规则异常!'});
+      }else{
+        res.json({data: data});
+      }
+    });
+  }
+};
+// 更新规则
+tkdCtrol.ruleUpdate = function(req, res){
+  var id = req.body.id;
+
+  var rule = {
+    title: req.body.title || '',
+    desc: req.body.desc || '',
+    ico: req.body.icoPath || '',
+    icoName: req.body.icoName || '',
+    content: req.body.ueTxt || '',
+    htmlCont: req.body.ueContent || ''
+  };
+  Rule.updateInfo(id, rule, function(err, updateCount){
+    if (err){
+      appLog.writeErrorLog("tkdCtrl.js", "更新规则数据库操作异常，错误码：" + updateCount);
+      res.redirect('/admin/tkd');
+    }else{
+      res.redirect('/admin/tkd');
+    }
+  });
+};
+// 删除规则
+tkdCtrol.deleteRuleById = function(req, res){
+  var id = req.body.id;
+
+  Rule.deleteInfo(id, function(err, updateCount){
+    if (err){
+      res.json({error: '删除规则错误', code:'500'});
+    }else{
+      res.json({success:'true'});
     }
   });
 };
@@ -286,22 +318,6 @@ tkdCtrol.addCardDetail = function(req, res){
     }
   });
 };
-
-// 根据ID获取规则数据
-tkdCtrol.getRuleById = function(req, res){
-  var _id = req.query.id;
-  if (_id == null || _id == ''){
-    res.json({error: 'ID不能为空'});
-  }else{
-    Rule.findById(_id, function(err, data){
-      if(err){
-        res.json({error: '根据ID查询规则异常!'});
-      }else{
-        res.json({data: data});
-      }
-    });
-  }
-};
 // 根据ID获取卡牌数据
 tkdCtrol.getCardById = function(req, res){
   var _id = req.query.id;
@@ -317,28 +333,6 @@ tkdCtrol.getCardById = function(req, res){
     });
   }
 }
-
-// 更新规则
-tkdCtrol.ruleUpdate = function(req, res){
-  var id = req.body.id;
-
-  var rule = {
-    title: req.body.title || '',
-    desc: req.body.desc || '',
-    ico: req.body.icoPath || '',
-    icoName: req.body.icoName || '',
-    content: req.body.ueTxt || '',
-    htmlCont: req.body.ueContent || ''
-  };
-  Rule.updateInfo(id, rule, function(err, updateCount){
-    if (err){
-      appLog.writeErrorLog("tkdCtrl.js", "更新规则数据库操作异常，错误码：" + updateCount);
-      res.redirect('/admin/tkd');
-    }else{
-      res.redirect('/admin/tkd');
-    }
-  });
-};
 // 更新卡牌
 tkdCtrol.cardUpdate = function(req, res){
   var id = req.body.id;
@@ -357,19 +351,6 @@ tkdCtrol.cardUpdate = function(req, res){
     }
   });
 };
-
-// 删除规则
-tkdCtrol.deleteRuleById = function(req, res){
-  var id = req.body.id;
-
-  Rule.deleteInfo(id, function(err, updateCount){
-    if (err){
-      res.json({error: '删除规则错误', code:'500'});
-    }else{
-      res.json({success:'true'});
-    }
-  });
-};
 // 删除卡牌
 tkdCtrol.deleteCardById = function(req, res){
   var id = req.body.id;
@@ -381,7 +362,50 @@ tkdCtrol.deleteCardById = function(req, res){
     }
   });
 };
+// 卡牌详情列表
+tkdCtrol.cardDetailList = function(req, res){
+  var cardTypeId = req.query.typeId?req.query.typeId:"",
+      detailList = [],
+      This = this;
 
+  if (cardTypeId == ""){
+    res.render('admin/tkd_card_detail_list', { 
+      "title": '三国杀卡牌详情列表页',
+      "detailList": detailList,
+      "cardTypeId": cardTypeId
+    });
+  } else {
+    Card.findById(cardTypeId, function(err, data){
+      var detailObj = null,
+          tmpObj = null,
+          cardList = [],
+          i;
+
+      if(err){
+        appLog.writeErrorLog("tkdCtrl.js", "查询列表卡牌详情列表异常");
+      }else{
+        cardList = data.cardList?data.cardList:[];
+        for(i = 0; i < cardList.length; i++){
+          detailObj = cardList[i];
+          tmpObj = {
+            "title": detailObj.title,
+            "id": detailObj._id,
+            "anchorId": detailObj.anchorId,
+            "ico": detailObj.ico,
+            "icoName": detailObj.icoName,
+            "desc": appUtil.cutOutStr(detailObj.htmlCont, 30)
+          };
+          detailList.push(tmpObj);
+        }
+        res.render('admin/tkd_card_detail_list', { 
+          "title": '三国杀卡牌详情列表页',
+          "detailList": detailList,
+          "cardTypeId": cardTypeId
+        });
+      }
+    });
+  }
+};
 
 /**************************三国杀后台逻辑end*****************************/
 

@@ -34,12 +34,24 @@ block content
             th 更新
             th 操作
         tbody
-          tr 
-            td 暂无数据
-            td 
-            td
-            td
-            td
+          if detailList && detailList.length > 0
+            each detail in detailList
+              tr
+                td #{detail.title}
+                td #{detail.desc}
+                td
+                  img.list-ico(src='#{detail.ico}' alt='#{detail.title}')
+                td 
+                  a.link.card_detail_update(href='javascript:void(0);' data-id='#{detail.id}') 更新
+                td
+                  a(data-id='#{detail._id}' class="remove_card_detail").btn.btn-danger 删除
+          else
+            tr 
+              td 暂无数据
+              td 
+              td
+              td
+              td
       a(href="/admin/tkd?tkd_type=card" target="_self").back_main.btn.btn-primary 返回
       a(id='addDetailBtn').btn.btn-primary.add_detail_btn 添加
 
