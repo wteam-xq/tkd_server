@@ -5,14 +5,10 @@ $(function(){
   var $mainMenu = $('#mainmenu'),
       // 二级页面
       $subPanel = $('#subPanel'),
-      // 三级页面
-      $childPanel = $('#childPanel'),
       // 新增卡牌面板
       $addCardPanel = $subPanel.find('.card_add_panel'),
       // 更新卡牌面板
       $updateCardPanel = $subPanel.find('.card_update_panel'),
-      // 卡牌详情列表面板
-      $detailCardPanel = $subPanel.find('.card_detial_list_panel'),
       // 导航条
       $adminCrumb = $('#adminCrumb'),
       $toTkd = $('#toTkd'),
@@ -50,14 +46,6 @@ $(function(){
           $removeSubmit = $('#removeSubmit'),
           // 新增卡牌按钮
           $addCardBtn = $('#add_card_btn'),
-          // 三级页面返回按钮
-          // $addDetailBack = $childPanel.find('.back_sub_panel'),
-          // 显示卡牌列表按钮
-          // $detailListBtn = $('#card').find('.card_list_btn'),
-          // 新增卡牌详情按钮
-          // $addDetailBtn = $subPanel.find('#addDetailBtn'),
-          // 提交新增卡牌按钮
-          // $commitDetailBtn = $childPanel.find('.commit_btn'),
           $commitAddBtn,
           $commitUpdateBtn,
           $fileDom;
@@ -89,12 +77,6 @@ $(function(){
       });
       // 弹出更新卡牌UI
       $mainMenu.find('.card-update').on('click', showUpdateCardPanel);
-      // 展示 卡牌详情列表
-      // $detailListBtn.on('click', showDetailList);
-      // $addDetailBtn.on('click', showAddDetailPanel);
-      // 从三级页面返回二级页面
-      // $addDetailBack.on('click', backSubPanel);
-      // $commitDetailBtn.on('click', commitCardDetail);
     },
     showNewCardPanel: function(){
       var $this = $(this);
@@ -226,67 +208,5 @@ $(function(){
       $panelForm.submit();
     }
   }
-  // 显示卡牌详情列表
-  function showDetailList(){
-    var $this = $(this),
-        _id = $this.attr('data-id');
-
-    $subPanel.find('.row').hide();
-    $subPanel.show();
-    $detailCardPanel.show();
-    $mainMenu.hide();
-    // 导航条出现
-    $adminCrumb.find('.active:first').html('卡牌详情列表');
-    $adminCrumb.show();
-    // 记录卡牌类型ID
-    $childPanel.find('#cardTypeId').val(_id);
-  }
-  // 渲染生成卡牌详情列表(请求卡详情列表)
-  function renderDetailList(){
-    
-  }
-  // 新增卡牌详情
-  function showAddDetailPanel(){
-    $detailCardPanel.hide();
-    $childPanel.show();
-    // 导航条出现
-    $adminCrumb.find('.active:first').html('添加详情卡牌');
-  }
-  // 返回列表卡牌页面
-  function backSubPanel(){
-    $childPanel.hide();
-    $detailCardPanel.show();
-    // 导航条出现
-    $adminCrumb.find('.active:first').html('卡牌详情列表');
-  }
-  // 提交新增卡牌请求
-  function commitCardDetail(){
-    var $this = $(this),
-        $commitForm = $this.parents('form'),
-        _title = $commitForm.find('.title').val(),
-        _content = $commitForm.find('.content').val(),
-        _ico_path = $commitForm.find('.icoPath').val(),
-        _type_id = $childPanel.find('#cardTypeId').val(),
-        $tips = $commitForm.find('.alert');
-
-    // 提交字段是否齐全校验
-    if (_title == ''){
-      showTips('标题不能为空！', $tips);
-      return false;
-    }else if (_content == ''){
-      showTips('内容不能为空！', $tips);
-      return false;
-    }else if(_ico_path == ''){
-      showTips('图标不能为空！', $tips);
-      return false;
-    }else if(!_type_id) {
-      showTips('卡牌类型不能为空！', $tips);
-      return false;
-    }else{
-      $commitForm.find('.card_type_id').val(_type_id);
-      $commitForm.submit();
-    }
-  }
-
   tkdCardObj.init();
 });
