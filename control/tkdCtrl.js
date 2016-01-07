@@ -326,7 +326,7 @@ tkdCtrol.getCardById = function(req, res){
   }else{
     Card.findById(_id, function(err, data){
       if(err){
-        res.json({error: '根据ID查询规则异常!'});
+        res.json({error: '根据ID查询卡牌异常!'});
       }else{
         res.json({data: data});
       }
@@ -362,6 +362,27 @@ tkdCtrol.deleteCardById = function(req, res){
     }
   });
 };
+// 删除卡牌详情
+tkdCtrol.deleteCardDetail = function(req, res){
+  var id = req.body.id,
+      This = this,
+      typeId = req.body.typeId;
+  var opt = {
+    "id": id,
+    "typeId": typeId
+  };
+
+  // 根据卡牌类型ID获得卡牌详情
+  Card.removeCardDetail(opt, function(err, result){
+    if (err || result != 1) {
+      res.json({error: '删除卡牌详情异常!'});
+    } else {
+      res.json({success:'true'});
+    }
+  });
+  
+};
+
 // 卡牌详情列表
 tkdCtrol.cardDetailList = function(req, res){
   var cardTypeId = req.query.typeId?req.query.typeId:"",

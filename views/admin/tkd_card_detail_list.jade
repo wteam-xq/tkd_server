@@ -24,6 +24,8 @@ block content
 
   //- 卡牌列表
   .container#subPanel
+    // 主页面点击删除的ID
+    input(type='hidden' value='' id='selectId')
     .row.card_detial_list_panel
       table.table.table-bordered.table-hover
         thead
@@ -44,7 +46,7 @@ block content
                 td 
                   a.link.card_detail_update(href='javascript:void(0);' data-id='#{detail.id}') 更新
                 td
-                  a(data-id='#{detail._id}' class="remove_card_detail").btn.btn-danger 删除
+                  a(data-id='#{detail.id}' class="remove_card_detail").btn.btn-danger 删除
           else
             tr 
               td 暂无数据
@@ -59,7 +61,7 @@ block content
   .container.unvisible#childPanel
     input(type="hidden" id="cardTypeId" value="#{cardTypeId}")
     .row.add_detail_card_panel
-      form.form-horizontal(method="POST" action="tkd/addCardDetail" name='detailform')
+      form.form-horizontal(method="POST" action="addCardDetail" name='detailform')
         input.card_type_id(type="hidden" value="" name="typeId")
         .alert.alert-warning.hidden(role='alert') 警告内容
         .form-group

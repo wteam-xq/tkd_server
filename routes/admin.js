@@ -16,7 +16,6 @@ router.get('/tkd', tkdControl.tkdList);
 router.get('/tkd/index', tkdControl.tkdList);
 router.get('/tkd/cardDetailList', tkdControl.cardDetailList);
 
-
 // 规则添加、规则更新
 router.post('/tkd/ruleAdd', tkdControl.ruleAdd);
 router.post('/tkd/ruleUpdate', tkdControl.ruleUpdate);
@@ -34,6 +33,8 @@ router.get('/tkd/getCardById', tkdControl.getCardById);
 router.post('/tkd/card/delete', tkdControl.deleteCardById);
 // 卡牌详情添加、卡牌详情更新
 router.post('/tkd/addCardDetail', tkdControl.addCardDetail);
+// 根据ID删除卡牌详情
+router.post('/tkd/card_detail/delete', tkdControl.deleteCardDetail);
 
 // 上传图标
 router.post('/upload/ico', tkdControl.uploadIco);

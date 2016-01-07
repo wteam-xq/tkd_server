@@ -96,7 +96,7 @@ TkdCardSchema.statics = {
     return this
       .remove(conditions, cbf);
   },
-  // 新增卡牌
+  // 新增卡牌详情
   addCardDetail: function(cardDetailObj, cbf){
     // 卡牌类型ID
     var typeId = cardDetailObj.typeId,
@@ -116,6 +116,46 @@ TkdCardSchema.statics = {
         }
         cbf(null, 1);
       });
+    });
+  },
+  // 删除卡牌详情
+  removeCardDetail: function(opt, cbf){
+    // 卡牌类型ID
+    var typeId = opt.typeId,
+        detailId = opt.id,
+        _card = null,
+        cardModel = this,
+        cardDetailList = [],
+        i,
+        findSuccess = false,
+        cardDetailObj = null;
+        
+    // 往卡牌类型插入新数据
+    cardModel.findById(typeId, function(err, card){
+      if (err){
+        cbf(err, 500);
+        return
+      }
+      _card = card;
+      cardDetailList = _card.cardList;
+      for(i = 0; i < cardDetailList.length; i++){
+        cardDetailObj = cardDetailList[i];
+        if (cardDetailObj._id == detailId) {
+          findSuccess = true;
+          _card.cardList.splice(i,1);
+          break;
+        }
+      }
+      if (findSuccess) {
+        card.save(function(error, _card){
+          if (error){
+            cbf(error, 500);
+          }
+          cbf(null, 1);
+        });
+      } else {
+        cbf(null, 0);
+      }
     });
   }
 };

@@ -4,11 +4,16 @@ $(function(){
   var $childPanel = $('#childPanel'), 
       // 提示弹出层
       $confirmDialog = $('#removeConfirm'),
+      // 弹出框提示
+      $removeTips = $('#removeips'),
       $subPanel = $('#subPanel'),
+      $cardTypeId = $childPanel.find('#cardTypeId'),
       // 卡牌详情列表面板
       $detailCardPanel = $subPanel.find('.card_detial_list_panel'),
       // 导航条
       $toTkd = $('#toTkd'),
+      // 存储待删除ID隐藏域
+      $selectedId = $subPanel.find('#selectId'),
       $adminCrumb = $('#adminCrumb');
 
   var tkdCardDetailObj = null;
@@ -30,6 +35,9 @@ $(function(){
       var This = this,
           // 卡牌详情页返回按钮
           $addDetailBack = $childPanel.find('.back_sub_panel'),
+          // 删除卡牌按钮
+          $removeBtn = $subPanel.find('.remove_card_detail'),
+          $removeSubmit = $('#removeSubmit'),
           // 新增卡牌详情按钮
           $addDetailBtn = $subPanel.find('#addDetailBtn'),
           // 提交新增卡牌按钮
@@ -45,6 +53,9 @@ $(function(){
       $addDetailBack.on('click', backSubPanel);
       $commitDetailBtn.on('click', commitCardDetail);
       $toTkd.on('click', backCardTypeList);
+      // 确认删除卡牌
+      $removeBtn.on('click', showConfirmPanel);
+      $removeSubmit.on('click', confirmRemoveCard);
     }
   };
   // 新增卡牌详情
@@ -98,6 +109,32 @@ $(function(){
   // 返回卡牌类型列表页
   function backCardTypeList(){
     window.location.href = "/admin/tkd?tkd_type=card";
+  }
+  // 显示确认删除提示
+  function showConfirmPanel(){
+    var $this = $(this),
+        _id = $this.attr('data-id');
+
+    $selectedId.val(_id);
+    // 改变提示内容
+    $removeTips.html('确定要删除该卡牌吗？');
+    $confirmDialog.modal({backdrop:'static'});
+  }
+  // 确认删除卡牌
+  function confirmRemoveCard(){
+    // 异步请求
+    var $this = $(this),
+        _id = $selectedId.val(),
+        delete_url = '/admin/tkd/card_detail/delete';
+
+    $.post(delete_url, {"id": _id, "typeId": $cardTypeId.val()}, function(data){
+      if (data.error){
+        $('#removeTips').html('删除异常:' + data.error + '  请刷新重试。');
+      }else{
+        // 删除完后刷新页面
+        window.location.reload();
+      }
+    }, 'json');
   }
 
   tkdCardDetailObj.init();
