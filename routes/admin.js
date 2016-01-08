@@ -35,6 +35,8 @@ router.post('/tkd/card/delete', tkdControl.deleteCardById);
 router.post('/tkd/addCardDetail', tkdControl.addCardDetail);
 // 根据ID删除卡牌详情
 router.post('/tkd/card_detail/delete', tkdControl.deleteCardDetail);
+// 更新卡牌详情
+router.post('/tkd/updateCardDetail', tkdControl.updateCardDetal);
 
 // 上传图标
 router.post('/upload/ico', tkdControl.uploadIco);

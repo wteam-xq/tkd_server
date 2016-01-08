@@ -380,8 +380,32 @@ tkdCtrol.deleteCardDetail = function(req, res){
       res.json({success:'true'});
     }
   });
-  
 };
+// 更新卡牌详情
+tkdCtrol.updateCardDetal = function(req, res){
+  var cardDetail = {
+    title: req.body.title || '',
+    htmlCont: req.body.content || '',
+    anchorId: req.body.anchorId || '',
+    ico: req.body.icoPath || '',
+    icoName: req.body.icoName || '',
+    typeId: req.body.typeId || ''
+  };
+  var opt = {
+    "id": req.body.id || '',
+    "typeId": req.body.typeId || '',
+    "detailObj": cardDetail
+  };
+
+  // 根据卡牌类型ID获得卡牌详情
+  Card.updateCardDetail(opt, function(err, result){
+    if (err || result != 1) {
+      res.json({error: '更新卡牌详情异常!'});
+    } else {
+      res.redirect('/admin/tkd/cardDetailList?typeId=' + cardDetail.typeId);
+    }
+  });
+}
 
 // 卡牌详情列表
 tkdCtrol.cardDetailList = function(req, res){

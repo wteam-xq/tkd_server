@@ -91,6 +91,37 @@ block content
             //- button(type="submit").btn.btn-primary 提交添加
           .col-md-2
       a.back_sub_panel.btn.btn-primary 返回    
+    .row.update_detail_card_panel
+      form.form-horizontal(method="POST" action="updateCardDetail" name='detailform')
+        input.card_type_id(type="hidden" value="" name="typeId")
+        .alert.alert-warning.hidden(role='alert') 警告内容
+        .form-group
+          label.col-md-1.control-label 标题
+          .col-md-10
+            input(type="text" class="title" name="title").form-control
+        .form-group
+          label.col-md-1.control-label 内容
+          .col-md-10
+            textarea(class="content" name="content").form-control
+        .form-group
+          label.col-md-1.control-label 图标
+          .col-md-2.prelative
+            //- 隐藏上传图控件, data-type card-add:  新增卡牌， card-update： 更新卡牌
+            input.upload-file.form-control.unvisibility.btn.btn-primary(type="file" name="ico" value='点击上传图标')
+            input.icoPath(type="hidden" name='icoPath' value='')
+            .btn.btn-primary(class="upload-ico").form-control 点击上传图标
+          .col-md-2
+            .upload-tips.unvisible 图标上传提示
+            input.icoName(type='hidden' name='icoName' value='')
+          .col-md-4.col-md-offset-2
+            .upload-pro.unvisible.progress
+              .progress-bar(role="progressbar")
+        .form-group
+          .col-md-1.col-md-offset-1
+            .commit_btn.btn.btn-primary(data-type='add') 提交添加
+            //- button(type="submit").btn.btn-primary 提交添加
+          .col-md-2
+      a.back_sub_panel.btn.btn-primary 返回 
 
   // 加入上传插件
   script(type="text/javascript",src="/components/jquery.ui.widget.js")
