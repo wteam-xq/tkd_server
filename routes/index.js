@@ -34,5 +34,7 @@ router.get('/tkd_rule', tkdControl.getRuleById);
 // 三国杀卡牌列表
 router.get('/tkd_card', tkdControl.getCardById);
 router.get('/tkd_cards', tkdControl.tkdCardList);
+// 根据ID查找卡牌详情
+router.get('/tkd/getCardDetailById', tkdControl.getCardDetailById);
 
 module.exports = router;

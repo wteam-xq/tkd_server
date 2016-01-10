@@ -60,7 +60,7 @@ block content
   //- 新增、更新 卡牌
   .container.unvisible#childPanel
     input(type="hidden" id="cardTypeId" value="#{cardTypeId}")
-    .row.add_detail_card_panel
+    .row.add_detail_card_panel.unvisible
       form.form-horizontal(method="POST" action="addCardDetail" name='detailform')
         input.card_type_id(type="hidden" value="" name="typeId")
         .alert.alert-warning.hidden(role='alert') 警告内容
@@ -91,9 +91,10 @@ block content
             //- button(type="submit").btn.btn-primary 提交添加
           .col-md-2
       a.back_sub_panel.btn.btn-primary 返回    
-    .row.update_detail_card_panel
+    .row.update_detail_card_panel.unvisible
       form.form-horizontal(method="POST" action="updateCardDetail" name='detailform')
         input.card_type_id(type="hidden" value="" name="typeId")
+        input.card_detail_id(type="hidden" value="" name="detailId")
         .alert.alert-warning.hidden(role='alert') 警告内容
         .form-group
           label.col-md-1.control-label 标题

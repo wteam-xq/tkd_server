@@ -392,7 +392,7 @@ tkdCtrol.updateCardDetal = function(req, res){
     typeId: req.body.typeId || ''
   };
   var opt = {
-    "id": req.body.id || '',
+    "id": req.body.detailId || '',
     "typeId": req.body.typeId || '',
     "detailObj": cardDetail
   };
@@ -405,6 +405,27 @@ tkdCtrol.updateCardDetal = function(req, res){
       res.redirect('/admin/tkd/cardDetailList?typeId=' + cardDetail.typeId);
     }
   });
+}
+// 根据ID获取卡牌详情数据
+tkdCtrol.getCardDetailById = function(req, res){
+  var opt = {
+    "id": req.query.id,
+    "typeId": req.query.typeId
+  };
+
+  if (!opt.id || !opt.typeId){
+    res.json({error: 'ID不能为空'});
+  }else{
+    Card.findCardDetailById(opt, function(err, data){
+      if(err){
+        res.json({error: '根据ID查询卡牌详情异常!'});
+      } else if (data == 0){
+        res.json({error: '不存在该ID的卡牌详情!'});
+      }else{
+        res.json({data: data});
+      }
+    });
+  }
 }
 
 // 卡牌详情列表

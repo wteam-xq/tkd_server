@@ -7,7 +7,7 @@ $(function(){
       // 弹出框提示
       $removeTips = $('#removeips'),
       $subPanel = $('#subPanel'),
-      $cardTypeId = $childPanel.find('#cardTypeId'),
+      cardTypeId = $childPanel.find('#cardTypeId').val(),
       // 卡牌详情列表面板
       $detailCardPanel = $subPanel.find('.card_detial_list_panel'),
       // 导航条
@@ -40,6 +40,8 @@ $(function(){
           $removeSubmit = $('#removeSubmit'),
           // 新增卡牌详情按钮
           $addDetailBtn = $subPanel.find('#addDetailBtn'),
+          // 更新卡牌详情按钮
+          $updateDetailBtn = $subPanel.find('.card_detail_update'),
           // 提交新增卡牌按钮
           $commitDetailBtn = $childPanel.find('.commit_btn'),
           // 赋予上传事件
@@ -56,18 +58,56 @@ $(function(){
       // 确认删除卡牌
       $removeBtn.on('click', showConfirmPanel);
       $removeSubmit.on('click', confirmRemoveCard);
+      // 点击更新卡牌详情按钮
+      $updateDetailBtn.on('click', showUpdateDetailPanel);
     }
   };
   // 新增卡牌详情
   function showAddDetailPanel(){
     $detailCardPanel.hide();
     $childPanel.show();
+    $childPanel.find('.add_detail_card_panel').removeClass('unvisible');
     // 导航条出现
     $adminCrumb.find('.active:first').html('添加详情卡牌');
+  }
+  // 更新卡牌详情
+  function showUpdateDetailPanel(){
+    var $this = $(this),
+        getDetailUrl = '/tkd/getCardDetailById',
+        $detailForm = $childPanel.find('.update_detail_card_panel').find('form'),
+        _id = $this.attr('data-id');
+
+    $detailCardPanel.hide();
+    $childPanel.show();
+    $childPanel.find('.update_detail_card_panel').removeClass('unvisible');
+    // 导航条出现
+    $adminCrumb.find('.active:first').html('更新详情卡牌');
+    // 异步请求后端该卡牌详情数据
+    // console.log('卡牌详情id:' + _id + ' 卡牌类型ID：' + cardTypeId);
+    $.get(getDetailUrl, {"id": _id, "typeId": cardTypeId}, function(data){
+      var detailObj = data.data,
+          $uploadTips = $detailForm.find('.upload-tips');
+      if (data.error){
+        $('#removeTips').html('查询卡牌详情异常:' + data.error + '  请稍后重试。');
+      }else{
+        // 删除完后刷新页面
+        // console.log('卡牌详情数据：' + JSON.stringify(data));
+        $detailForm.find('.title').val(detailObj.title);
+        $detailForm.find('.content').val(detailObj.htmlCont);
+        $detailForm.find('.icoPath').val(detailObj.ico);
+        $detailForm.find('.icoName').val(detailObj.icoName);
+        $uploadTips.html(detailObj.icoName);
+        $uploadTips.removeClass('unvisible');
+        // 设置卡牌详情ID
+        $detailForm.find('.card_detail_id').val(detailObj._id);
+      }
+    }, 'json');
   }
   // 返回列表卡牌页面
   function backSubPanel(){
     $childPanel.hide();
+    $childPanel.find('.add_detail_card_panel').addClass('unvisible');
+    $childPanel.find('.update_detail_card_panel').addClass('unvisible');
     $detailCardPanel.show();
     // 导航条出现
     $adminCrumb.find('.active:first').html('卡牌详情列表');
@@ -79,7 +119,7 @@ $(function(){
         _title = $commitForm.find('.title').val(),
         _content = $commitForm.find('.content').val(),
         _ico_path = $commitForm.find('.icoPath').val(),
-        _type_id = $childPanel.find('#cardTypeId').val(),
+        _type_id = cardTypeId,
         $tips = $commitForm.find('.alert');
 
     // 提交字段是否齐全校验
@@ -127,7 +167,7 @@ $(function(){
         _id = $selectedId.val(),
         delete_url = '/admin/tkd/card_detail/delete';
 
-    $.post(delete_url, {"id": _id, "typeId": $cardTypeId.val()}, function(data){
+    $.post(delete_url, {"id": _id, "typeId": cardTypeId}, function(data){
       if (data.error){
         $('#removeTips').html('删除异常:' + data.error + '  请刷新重试。');
       }else{
