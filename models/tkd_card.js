@@ -183,7 +183,11 @@ TkdCardSchema.statics = {
         cardDetailObj = cardDetailList[i];
         if (cardDetailObj._id == detailId) {
           findSuccess = true;
-          _card.cardList[i] = _detailObj;
+          cardDetailObj.htmlCont = _detailObj.htmlCont;
+          cardDetailObj.title = _detailObj.title;
+          cardDetailObj.anchorId = _detailObj.anchorId;
+          cardDetailObj.ico = _detailObj.ico;
+          cardDetailObj.icoName = _detailObj.icoName;
           break;
         }
       }

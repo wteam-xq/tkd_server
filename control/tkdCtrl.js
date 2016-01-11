@@ -313,6 +313,7 @@ tkdCtrol.addCardDetail = function(req, res){
     if (error){
       // 写一错误显示页面， 错误信息在该页面显示之
       appLog.writeErrorLog("tkdCtrl.js", "添加卡牌详情至数据库异常");
+      res.redirect('/admin/tkd/cardDetailList?typeId=' + cardDetail.typeId);
     }else{
       res.redirect('/admin/tkd/cardDetailList?typeId=' + cardDetail.typeId);
     }
@@ -388,8 +389,7 @@ tkdCtrol.updateCardDetal = function(req, res){
     htmlCont: req.body.content || '',
     anchorId: req.body.anchorId || '',
     ico: req.body.icoPath || '',
-    icoName: req.body.icoName || '',
-    typeId: req.body.typeId || ''
+    icoName: req.body.icoName || ''
   };
   var opt = {
     "id": req.body.detailId || '',
@@ -400,9 +400,10 @@ tkdCtrol.updateCardDetal = function(req, res){
   // 根据卡牌类型ID获得卡牌详情
   Card.updateCardDetail(opt, function(err, result){
     if (err || result != 1) {
-      res.json({error: '更新卡牌详情异常!'});
+      appLog.writeErrorLog("tkdCtrl.js", "更新卡牌详情异常");
+      res.redirect('/admin/tkd/cardDetailList?typeId=' + opt.typeId);
     } else {
-      res.redirect('/admin/tkd/cardDetailList?typeId=' + cardDetail.typeId);
+      res.redirect('/admin/tkd/cardDetailList?typeId=' + opt.typeId);
     }
   });
 }
