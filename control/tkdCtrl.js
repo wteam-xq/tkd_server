@@ -113,7 +113,7 @@ tkdCtrol.tkdList = function(req, res) {
       searchCardList()
       break;
     case "heros":
-      searchRuleList();
+      searchHerosList();
       break;
     case "strategy":
       searchRuleList();
@@ -199,6 +199,22 @@ tkdCtrol.tkdList = function(req, res) {
           "tkd_type": 'card'
         });
       }
+    });
+  }
+  // 查找武将卡牌列表
+  function searchHerosList(){
+    var herosList = [], showObj = {};
+    showObj = {
+      "pageNum": pageNum,
+      "pageSize": pageSize,
+      "totalPage": totalPage,
+      "herosList": herosList
+    };
+    res.render('admin/tkd_hero_list', { 
+      title: '三国杀列表页',
+      type: 'tkd',
+      "cardObj": showObj,
+      "tkd_type": 'heros'
     });
   }
 };

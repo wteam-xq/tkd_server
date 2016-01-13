@@ -1,0 +1,1 @@
+{ "_id" : { "$oid" : "5670f3089fd178833e433ff3" }, "name" : "xq", "age" : 47, "job" : "coder", "hobby" : "running", "password" : "$2a$10$Py83GhwB8S3GfWZSX8BfmuIeFxX1cFFhLc/GWg1pD8JuTl3tb/RNS", "email" : "123@qq.com", "meta" : { "updateAt" : { "$date" : "2015-12-16T13:13:44.492+0800" }, "createAt" : { "$date" : "2015-12-16T13:13:44.492+0800" } }, "__v" : 0 }

@@ -34,10 +34,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(dbOptions.cookieSecret));
+// maxAge session存在的时长，单位：毫秒; 此处设置成保存24小时
 app.use(session({
     resave: false,
     saveUninitialized: true,
-    cookie: {maxAge:3600000},
+    cookie: {maxAge:24 * 60 * 60 * 1000},
     secret: dbOptions.cookieSecret,
     store: new mongoStore({
         db: dbOptions.dbName,
