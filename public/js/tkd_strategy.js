@@ -1,12 +1,12 @@
-// 武将列表脚本
+// 攻略列表脚本
 $(function(){
 
   // 主页面
   var $main_menu = $('#mainmenu');
 
-  var HeroObj = null;
+  var StrategyObj = null;
 
-  HeroObj = {
+  StrategyObj = {
     init: function(){
 
     },
@@ -14,6 +14,6 @@ $(function(){
 
     }
   };
-  HeroObj.init();
+  StrategyObj.init();
 
 });

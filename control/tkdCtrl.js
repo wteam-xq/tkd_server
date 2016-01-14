@@ -116,7 +116,7 @@ tkdCtrol.tkdList = function(req, res) {
       searchHerosList();
       break;
     case "strategy":
-      searchRuleList();
+      searchStrategyList();
       break;
     default:
       searchRuleList();
@@ -215,6 +215,22 @@ tkdCtrol.tkdList = function(req, res) {
       type: 'tkd',
       "cardObj": showObj,
       "tkd_type": 'heros'
+    });
+  }
+  // 查找攻略列表
+  function searchStrategyList(){
+    var strategyList = [], showObj = {};
+    showObj = {
+      "pageNum": pageNum,
+      "pageSize": pageSize,
+      "totalPage": totalPage,
+      "strategyList": strategyList
+    };
+    res.render('admin/tkd_strategy_list', { 
+      title: '三国杀列表页',
+      type: 'tkd',
+      "cardObj": showObj,
+      "tkd_type": 'strategy'
     });
   }
 };

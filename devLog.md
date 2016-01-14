@@ -23,6 +23,7 @@
 * 2016-01-06 添加wiki文档，后台规则代码整理；
 * 2016-01-11 修复无法更新卡牌详情bug(node-inspector 调试工具使用解决)
 * 2016-01-13 检查session 过期时间， 导出目前数据库数据(后期解除 public/upload_imgs/提交限制)
+* 2016-01-14 放开public/upload_imgs限制, 新增攻略主页面
 
 
 ### 遗留bug
