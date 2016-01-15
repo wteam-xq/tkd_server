@@ -9,6 +9,7 @@ var TkdCardSchema = new mongoose.Schema({
   icoName: String,
   cardList: [{
     htmlCont: String, 
+    aqList:[{Q:String, A:String}],
     title:String, 
     anchorId:String, 
     ico:String, 

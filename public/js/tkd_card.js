@@ -167,7 +167,7 @@ $(function(){
     $selectedId.val(_id);
     $selectedId.attr('data-type', 'card');
     // 改变提示内容
-    $removeTips.html('确定要删除该类型卡牌吗？');
+    $removeTips.html('确定要删除该类型卡牌吗？确定的话，该类型下的所有卡牌都会被删除！');
     $confirmDialog.modal({backdrop:'static'});
   }
   // 确认删除卡牌
