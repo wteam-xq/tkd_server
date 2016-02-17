@@ -8,6 +8,8 @@
 * 返回数组类型，应该都包括分页相关参数: pageNum:1; pageSize:10; totalPage:1;
 * model.find().skip(start).limit(pageSize).exex(cbCbf);
 
+* 启动mongodb : ./mongod --dbpath ../data/db
+
 ### 开发日志
 * 2015-12-9  将三国杀faq完成中的后台代码迁移；剔除无关代码。
 * 2015-12-11 三国杀规则添加检索表；

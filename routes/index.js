@@ -3,6 +3,15 @@ var express = require('express'),
     frontControl = require('../control/frontCtrl'),
     tkdControl = require('../control/tkdCtrl');
 
+// 跨域解决方案（CORS）
+router.use(function(req, res, next) {  
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+    // res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT');
+    next();
+});
+
 // 前端首页
 router.get('/', frontControl.index);
 router.get('/index', frontControl.index);
