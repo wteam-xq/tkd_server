@@ -537,6 +537,7 @@ tkdCtrol.tkdRulesList = function(req, res) {
   Rule.fetch(opt, function(err, rules){
     var showObj = {}, ruleList = [], ruleObj, i, len;
     if (err){
+      res.json({"error": '查询规则列表异常!'});
       appLog.writeErrorLog("tkdCtrl.js", "查询规则列表异常");
     }else{
       for(i = 0, len = rules.length; i < len; i++){

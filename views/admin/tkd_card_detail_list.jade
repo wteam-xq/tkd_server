@@ -85,20 +85,29 @@ block content
           .col-md-4.col-md-offset-2
             .upload-pro.unvisible.progress
               .progress-bar(role="progressbar")
-        .form-group
-          label.col-md-1.control-label [Q]
-          .col-md-10
-            input(type="text" class="card_q" name="card_q").form-control
-        .form-group
-          label.col-md-1.control-label [A]
-          .col-md-10
-            input(type="text" class="card_a" name="card_a").form-control
+        .qa-wrap
+          .q.form-group
+            label.col-md-1.control-label [Q]
+            .col-md-10
+              input(type="text" class="card_q" name="card_q").form-control
+          .a.form-group
+            label.col-md-1.control-label [A]
+            .col-md-10
+              input(type="text" class="card_a" name="card_a").form-control
+          a(href="####" title="点击删除QA项").qa-close-btn.admin-sprite-bg
+
         .form-group
           .col-md-1.col-md-offset-1
-            .commit_btn.btn.btn-primary(data-type='add') 提交添加
-            //- button(type="submit").btn.btn-primary 提交添加
-          .col-md-2
-      a.back_sub_panel.btn.btn-primary 返回    
+            .btn.btn-primary.add-qa 新增QA
+
+        //- .form-group
+        //-   .col-md-1.col-md-offset-1
+        //-     .commit_btn.btn.btn-primary(data-type='add') 提交添加
+        //-     //- button(type="submit").btn.btn-primary 提交添加
+        //-   .col-md-2
+      a.back_sub_panel.btn.btn-primary 返回 
+      .commit_btn.btn.btn-primary(data-type='add') 提交添加
+
     .row.update_detail_card_panel.unvisible
       form.form-horizontal(method="POST" action="updateCardDetail" name='detailform')
         input.card_type_id(type="hidden" value="" name="typeId")

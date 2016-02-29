@@ -60,8 +60,22 @@ $(function(){
       $removeSubmit.on('click', confirmRemoveCard);
       // 点击更新卡牌详情按钮
       $updateDetailBtn.on('click', showUpdateDetailPanel);
+      // QA删除按钮点击事件
+
+      // QA新增按钮点击事件
     }
   };
+  // 新增QA组
+  function addQAItem(){
+    var _html = '<div class="qa-wrap"><div class="q form-group"><label class="col-md-1 control-label">[Q]</label><div class="col-md-10"><input type="text" name="card_q" class="card_q form-control"/></div></div><div class="a form-group"><label class="col-md-1 control-label">[A]</label><div class="col-md-10"><input type="text" name="card_a" class="card_a form-control"/></div></div><a href="####" title="点击删除QA项" class="qa-close-btn admin-sprite-bg"></a></div>';
+
+  }
+  // 删除QA组事件
+  function removeQAItem(e){
+    var $target = $(e.target);
+    e.preventDefault();
+  }
+
   // 新增卡牌详情
   function showAddDetailPanel(){
     $detailCardPanel.hide();
