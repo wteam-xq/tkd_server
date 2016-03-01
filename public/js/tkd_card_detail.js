@@ -15,6 +15,8 @@ $(function(){
       // 存储待删除ID隐藏域
       $selectedId = $subPanel.find('#selectId'),
       $adminCrumb = $('#adminCrumb');
+  var $addPanel = $childPanel.find('.add_detail_card_panel'),
+      $updatePanel = $childPanel.find('.update_detail_card_panel');
 
   var tkdCardDetailObj = null;
 
@@ -61,26 +63,33 @@ $(function(){
       // 点击更新卡牌详情按钮
       $updateDetailBtn.on('click', showUpdateDetailPanel);
       // QA删除按钮点击事件
-
+      $childPanel.on('click', '.qa-close-btn', removeQAItem);
       // QA新增按钮点击事件
+      $childPanel.find('.add-qa').on('click', addQAItem);
     }
   };
   // 新增QA组
-  function addQAItem(){
+  function addQAItem(e){
+    var $target = $(e.target),
+        $formGroup = null;
     var _html = '<div class="qa-wrap"><div class="q form-group"><label class="col-md-1 control-label">[Q]</label><div class="col-md-10"><input type="text" name="card_q" class="card_q form-control"/></div></div><div class="a form-group"><label class="col-md-1 control-label">[A]</label><div class="col-md-10"><input type="text" name="card_a" class="card_a form-control"/></div></div><a href="####" title="点击删除QA项" class="qa-close-btn admin-sprite-bg"></a></div>';
 
+    $formGroup =  $target.parents('.form-group');
+    $formGroup.before(_html);
   }
   // 删除QA组事件
   function removeQAItem(e){
-    var $target = $(e.target);
+    var $target = $(e.target),
+        $qaWrap = $target.parents('.qa-wrap');
     e.preventDefault();
+    $qaWrap.remove();
   }
 
   // 新增卡牌详情
   function showAddDetailPanel(){
     $detailCardPanel.hide();
     $childPanel.show();
-    $childPanel.find('.add_detail_card_panel').removeClass('unvisible');
+    $addPanel.removeClass('unvisible');
     // 导航条出现
     $adminCrumb.find('.active:first').html('添加详情卡牌');
   }
@@ -88,12 +97,12 @@ $(function(){
   function showUpdateDetailPanel(){
     var $this = $(this),
         getDetailUrl = '/tkd/getCardDetailById',
-        $detailForm = $childPanel.find('.update_detail_card_panel').find('form'),
+        $detailForm = $updatePanel.find('form'),
         _id = $this.attr('data-id');
 
     $detailCardPanel.hide();
     $childPanel.show();
-    $childPanel.find('.update_detail_card_panel').removeClass('unvisible');
+    $updatePanel.removeClass('unvisible');
     // 导航条出现
     $adminCrumb.find('.active:first').html('更新详情卡牌');
     // 异步请求后端该卡牌详情数据
@@ -120,8 +129,8 @@ $(function(){
   // 返回列表卡牌页面
   function backSubPanel(){
     $childPanel.hide();
-    $childPanel.find('.add_detail_card_panel').addClass('unvisible');
-    $childPanel.find('.update_detail_card_panel').addClass('unvisible');
+    $addPanel.addClass('unvisible');
+    $updatePanel.addClass('unvisible');
     $detailCardPanel.show();
     // 导航条出现
     $adminCrumb.find('.active:first').html('卡牌详情列表');

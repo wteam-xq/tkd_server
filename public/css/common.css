@@ -3,7 +3,7 @@ body {padding: 50px;font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;/*b
 a {color: #00B7FF;}
 .qa-wrap{ position: relative; }
 .admin-sprite-bg{ background:url('../images/admin_sprite_bg.png?v=1') no-repeat; }
-.qa-close-btn{ position:absolute; top:-25px; right:65px; background-position: 1px 0px; width:35px; height:35px; border-radius: 50%; background-color:rgba(31,25,26,0.7) }
+.qa-close-btn{ position:absolute; top:-25px; right:80px; background-position: 1px 0px; width:35px; height:35px; border-radius: 50%; background-color:rgba(31,25,26,0.7) }
 .qa-close-btn:hover{ background-position: -35px 0px; }
 .bg-grey{background-color: #ccc !important;}
 .red{color: red;}
