@@ -84,7 +84,6 @@ $(function(){
     e.preventDefault();
     $qaWrap.remove();
   }
-
   // 新增卡牌详情
   function showAddDetailPanel(){
     $detailCardPanel.hide();
@@ -138,21 +137,35 @@ $(function(){
   // 提交新增卡牌请求
   function commitCardDetail(){
     var $this = $(this),
-        $commitForm = $this.parents('form'),
+        $commitForm = $this.prevAll('form'),
         _title = $commitForm.find('.title').val(),
         _content = $commitForm.find('.content').val(),
         _ico_path = $commitForm.find('.icoPath').val(),
         _type_id = cardTypeId,
         $tips = $commitForm.find('.alert');
-
+    var $qaWrap = null,
+        $qaInput = null,
+        qaList = [];
+    $qaWrap = $commitForm.find('.qa-wrap');
+    $qaInput = $commitForm.find('.card_detail_qa');
+    $qaWrap.each(function(i){
+      var $this = $(this),
+          qaObj = null,
+          $q, $a;
+      $q = $this.find('.q');
+      $a = $this.find('.a');
+      qaObj = {"Q":$q.find('input').val(), "A":$a.find('input').val()};
+      qaList.push(qaObj);
+    });
+    $qaInput.val(JSON.stringify(qaList));
     // 提交字段是否齐全校验
-    if (_title == ''){
+    if (!_title){
       showTips('标题不能为空！', $tips);
       return false;
-    }else if (_content == ''){
+    }else if (!_content){
       showTips('内容不能为空！', $tips);
       return false;
-    }else if(_ico_path == ''){
+    }else if(!_ico_path){
       showTips('图标不能为空！', $tips);
       return false;
     }else if(!_type_id) {
@@ -162,6 +175,7 @@ $(function(){
       $commitForm.find('.card_type_id').val(_type_id);
       $commitForm.submit();
     }
+
   }
   // 显示提示内容
   function showTips(tips, $tips){

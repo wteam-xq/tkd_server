@@ -335,8 +335,12 @@ tkdCtrol.addCardDetail = function(req, res){
     anchorId: req.body.anchorId || '',
     ico: req.body.icoPath || '',
     icoName: req.body.icoName || '',
-    typeId: req.body.typeId || ''
+    typeId: req.body.typeId || '',
+    aqList: req.body.qaList || []
   };
+  if(cardDetail.aqList){
+    cardDetail.aqList = JSON.parse(cardDetail.aqList);
+  }
   if (!req.body.title) {
     res.redirect('/admin/tkd');
   }

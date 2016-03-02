@@ -63,6 +63,7 @@ block content
     .row.add_detail_card_panel.unvisible
       form.form-horizontal(method="POST" action="addCardDetail" name='detailform')
         input.card_type_id(type="hidden" value="" name="typeId")
+        input.card_detail_qa(type="hidden" value="" name="qaList")
         .alert.alert-warning.hidden(role='alert') 警告内容
         .form-group
           label.col-md-1.control-label 标题
@@ -106,6 +107,7 @@ block content
       form.form-horizontal(method="POST" action="updateCardDetail" name='detailform')
         input.card_type_id(type="hidden" value="" name="typeId")
         input.card_detail_id(type="hidden" value="" name="detailId")
+        input.card_detail_qa(type="hidden" value="" name="qaList")
         .alert.alert-warning.hidden(role='alert') 警告内容
         .form-group
           label.col-md-1.control-label 标题

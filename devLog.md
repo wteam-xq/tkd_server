@@ -8,6 +8,10 @@
 * 返回数组类型，应该都包括分页相关参数: pageNum:1; pageSize:10; totalPage:1;
 * model.find().skip(start).limit(pageSize).exex(cbCbf);
 
+* 16-03-02
+明天功能： 卡牌详情QA更新逻辑；
+后续功能： 删除卡牌， 卡牌对应的图片删除之；
+
 * 启动mongodb : ./mongod --dbpath ../data/db
 
 ### 开发日志
