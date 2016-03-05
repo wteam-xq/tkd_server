@@ -77,6 +77,22 @@ $(function(){
     $formGroup =  $target.parents('.form-group');
     $formGroup.before(_html);
   }
+  // 新增QA组(包含内容)
+  function addQAContentItem($wrap, aqList){
+    var i , len = aqList.length,
+        aqItem = null,
+        _html = '<div class="qa-wrap"><div class="q form-group"><label class="col-md-1 control-label">[Q]</label><div class="col-md-10"><input type="text" name="card_q" class="card_q form-control"/></div></div><div class="a form-group"><label class="col-md-1 control-label">[A]</label><div class="col-md-10"><input type="text" name="card_a" class="card_a form-control"/></div></div><a href="####" title="点击删除QA项" class="qa-close-btn admin-sprite-bg"></a></div>';
+    var $addQaBtn = $wrap.find('.add-qa'),
+        $qaWrap = null,
+        $addQaWrap = $addQaBtn.parents('.form-group');
+    for(i = 0; i < len; i++){
+      $qaWrap = $(_html);
+      aqItem = aqList[i];
+      $qaWrap.find('.card_q').val(aqItem['Q']);
+      $qaWrap.find('.card_a').val(aqItem['A']);
+      $addQaWrap.before($qaWrap);
+    }
+  }
   // 删除QA组事件
   function removeQAItem(e){
     var $target = $(e.target),
@@ -122,6 +138,11 @@ $(function(){
         $uploadTips.removeClass('unvisible');
         // 设置卡牌详情ID
         $detailForm.find('.card_detail_id').val(detailObj._id);
+        // 显示QA内容
+        if(detailObj.aqList && detailObj.aqList.length > 0){
+          $detailForm.find('.qa-wrap').remove();
+          addQAContentItem($detailForm, detailObj.aqList);
+        }
       }
     }, 'json');
   }

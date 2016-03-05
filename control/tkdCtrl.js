@@ -336,7 +336,7 @@ tkdCtrol.addCardDetail = function(req, res){
     ico: req.body.icoPath || '',
     icoName: req.body.icoName || '',
     typeId: req.body.typeId || '',
-    aqList: req.body.qaList || []
+    aqList: req.body.aqList || null
   };
   if(cardDetail.aqList){
     cardDetail.aqList = JSON.parse(cardDetail.aqList);
@@ -425,14 +425,18 @@ tkdCtrol.updateCardDetal = function(req, res){
     htmlCont: req.body.content || '',
     anchorId: req.body.anchorId || '',
     ico: req.body.icoPath || '',
-    icoName: req.body.icoName || ''
+    icoName: req.body.icoName || '',
+    aqList: req.body.aqList || null
   };
-  var opt = {
+  var opt = null;
+  if(cardDetail.aqList){
+    cardDetail.aqList = JSON.parse(cardDetail.aqList);
+  }
+  opt = {
     "id": req.body.detailId || '',
     "typeId": req.body.typeId || '',
     "detailObj": cardDetail
   };
-
   // 根据卡牌类型ID获得卡牌详情
   Card.updateCardDetail(opt, function(err, result){
     if (err || result != 1) {
@@ -450,8 +454,10 @@ tkdCtrol.getCardDetailById = function(req, res){
     "typeId": req.query.typeId
   };
 
-  if (!opt.id || !opt.typeId){
-    res.json({error: 'ID不能为空'});
+  if(!opt.id){
+    res.json({error: '卡牌ID不能为空'});
+  } else if(!opt.typeId){
+    res.json({error: '卡牌类型ID不能为空'});
   }else{
     Card.findCardDetailById(opt, function(err, data){
       if(err){

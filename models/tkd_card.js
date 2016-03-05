@@ -165,7 +165,6 @@ TkdCardSchema.statics = {
     var typeId = opt.typeId,
         detailId = opt.id,
         _detailObj = opt.detailObj,
-        _card = null,
         cardModel = this,
         cardDetailList = [],
         i,
@@ -189,6 +188,9 @@ TkdCardSchema.statics = {
           cardDetailObj.anchorId = _detailObj.anchorId;
           cardDetailObj.ico = _detailObj.ico;
           cardDetailObj.icoName = _detailObj.icoName;
+          if(_detailObj.aqList){
+            cardDetailObj.aqList = _detailObj.aqList;
+          }
           break;
         }
       }
