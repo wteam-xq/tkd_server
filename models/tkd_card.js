@@ -1,4 +1,6 @@
 var mongoose = require('mongoose'),
+    fileManage = require('../common/fileManage.js'),
+    path = require('path'),
     _ = require('underscore');
 
 // 创建卡牌的数据库模型骨架
@@ -142,8 +144,10 @@ TkdCardSchema.statics = {
       for(i = 0; i < cardDetailList.length; i++){
         cardDetailObj = cardDetailList[i];
         if (cardDetailObj._id == detailId) {
-          findSuccess = true;
           _card.cardList.splice(i,1);
+          // 删除成功后，删除对应图片
+          fileManage.deleteImg([path.dirname(__dirname) + '/public' + cardDetailObj.ico]);
+          findSuccess = true;
           break;
         }
       }
