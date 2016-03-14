@@ -1,15 +1,14 @@
 $(function(){
-  var $main_nav = $('#main-nav');
-  var $li_list = $main_nav.find('li');
-
-  var _href = location.href;
-  var _host = location.host;
-  var _url = _href.split(_host)[1];
+  var $main_nav = $('#main-nav'),
+      $li_list = $main_nav.find('li');
+  var pathname = location.pathname;
 
   $li_list.each(function(i){
     var $this = $(this);
-    var _href = $this.find('a').attr('href');
-    if (_url == _href){
+    var _adminType = $this.find('a').attr('data-id'),
+        _pathname = '';
+    _pathname = pathname.split('/')[2];
+    if (_adminType == _pathname){
       $this.addClass('active');
       return false;
     }

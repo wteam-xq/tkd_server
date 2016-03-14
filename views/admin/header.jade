@@ -4,11 +4,11 @@
     a.navbar-brand(href='/admin') wteam-xq
   ul.nav.navbar-nav(id='main-nav')
     li
-      a(href='/admin/users') 用户组
+      a(href='/admin/users' data-id="users") 用户组
     li
-      a(href='/admin/tkd?tkd_type=rule') 三国杀FAQ 
+      a(href='/admin/tkd?tkd_type=rule' data-id="tkd") 三国杀FAQ 
     li
-      a(href='/admin/resume') 个人简历
+      a(href='/admin/resume' data-id="resume") 个人简历
   ul.nav.navbar-nav.navbar-right.clear-right
     if type == 'tkd'
       li

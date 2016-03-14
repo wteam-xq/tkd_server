@@ -31,8 +31,8 @@ $(function(){
   // 公共dom事件
   function publicDomEvent(){
     // 删除 确认弹出框
-    var $remove_submit = $('#removeSubmit');
-    var $remove_cancel = $('#removeCancel');
+    var $remove_submit = $('#removeSubmit'),
+        $remove_cancel = $('#removeCancel');
 
     // 弹出框删除项请求
     $remove_submit.on('click', function(){
@@ -104,10 +104,10 @@ $(function(){
   // 规则dom事件
   function ruleDomEvent(){
     // 规则页面
-    var $rule_cont = $('#rule');
-    var $remove_btn = $rule_cont.find('.removeRule');
-    // 规则增加按钮
-    var $rule_add_btn = $('#rule-add'); 
+    var $rule_cont = $('#rule'),
+        $remove_btn = $rule_cont.find('.removeRule'),
+        // 规则增加按钮
+        $rule_add_btn = $('#rule-add'); 
     // 百度编辑器初始化
     $Ue = UE.getEditor('add-content');
     $Ue2 = UE.getEditor('update-content');
