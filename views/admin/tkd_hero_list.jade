@@ -36,10 +36,10 @@ block content
             if herosList && herosList.length > 0
               each hero in herosList
                 tr
-                  td #{hero.title}
-                  td #{hero.desc}
+                  td #{hero.name}
+                  td #{hero.nickName}
                   td
-                    img.list-ico(src='#{hero.ico}' alt='#{hero.title}')
+                    img.list-ico(src='#{hero.ico}' alt='#{hero.name}')
                   td 
                     a.link.card-update(href='javascript:void(0);' data-id='#{hero._id}') 更新
                   td
@@ -52,7 +52,11 @@ block content
                 td
                 td
             
-        a(id='add_card_btn').btn.btn-primary 添加 
+        .form-group.mt10
+          a(id='country_list').btn.btn-primary 管理势力
+          a(id='package_list').ml20.btn.btn-primary 管理包
+          a(id='add_card_btn').ml20.btn.btn-primary 添加武将
+
       .tab-pane(class="fade item-list" id="strategy") 攻略内容
 
     //删除提示弹出框

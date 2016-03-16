@@ -5,6 +5,7 @@ var tkdCtrol = {},
     appLog = require('../common/app_log.js'),
     appUtil = require('../common/utils.js'),
     Card = require('../models/tkd_card'),
+    Hero = require('../models/tkd_hero'),
     Rule = require('../models/tkd_rule');
 
 /**************************三国杀后台逻辑************************************/
@@ -515,6 +516,56 @@ tkdCtrol.cardDetailList = function(req, res){
     });
   }
 };
+// 新增武将
+tkdCtrol.addHero = function(req, res){
+  var hero = {
+    // 武将所属势力
+    country: req.body.packageType || '',
+    // 武将所属包
+    packageType: req.body.packageType || '',
+    ico: req.body.icoPath || '',
+    icoName: req.body.icoName || '',
+    name: req.body.name || '',
+    nickName: req.body.nickName || '',
+    onlineTask: req.body.onlineTask || '',
+    // 技能数组（需要JSON.parse）
+    power: req.body.power || '',
+    // 问答数组（需要JSON.parse）
+    aqList: req.body.aqList || '',
+    idStrategy: req.body.idStrategy || ''
+  };
+  if (!req.body.country) {
+    res.redirect('/admin/tkd?tkd_type=heros');
+  }
+  Hero.createInfo(hero, function(error, result){
+    if (error){
+      // 写一错误显示页面， 错误信息在该页面显示之
+      appLog.writeErrorLog("tkdCtrl.js", "添加武将至数据库异常");
+    }else{
+      res.redirect('/admin/tkd?tkd_type=heros');
+    }
+  });
+}
+// 武将列表
+tkdCtrol.heroList = function(req, res){
+
+}
+// 查询势力
+tkdCtrol.searchCountry = function(req, res){
+
+}
+// 新增势力
+tkdCtrol.addCountry = function(req, res){
+
+}
+// 查询包
+tkdCtrol.searchPackage = function(req, res){
+
+}
+// 新增包
+tkdCtrol.addPackage = function(req, res){
+
+}
 
 /**************************三国杀后台逻辑end*****************************/
 
@@ -616,7 +667,6 @@ tkdCtrol.tkdCardList = function(req, res){
     }
   });
 }
-
 /**************************三国杀前端json end*****************************/
 
 module.exports = tkdCtrol

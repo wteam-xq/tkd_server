@@ -3,7 +3,7 @@ var bcrypt = require('bcrypt-nodejs');
 var _ = require('underscore');
 
 var HeroSchema = new mongoose.Schema({
-  // 势力
+  // 所属势力
   country: String,
   // 所属包
   packageType: String,
@@ -18,9 +18,9 @@ var HeroSchema = new mongoose.Schema({
   // Online 战功
   onlineTask: String,
   // 武将技能
-  power: String,
+  power: [{powerCont:String}],
   // 问答数组
-  aqList:[{Q:String, A:String}],
+  aqList:[{Q:String, A:String, exception: String}],
   // 身份局攻略
   idStrategy: String,
   meta: {
@@ -95,6 +95,6 @@ HeroSchema.statics = {
 };
 
 // 第一参数为 模型名， 第二参数为模型骨架 第三参数对应为 数据库表名
-var Hero = mongoose.model('hero', HeroSchema, 'heros');
+var Hero = mongoose.model('tkdHero', HeroSchema, 'tkdHeros');
 
 module.exports = Hero

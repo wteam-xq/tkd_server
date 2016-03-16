@@ -7,6 +7,7 @@
 * 考虑改动数据库表结构，一个页面对应一个目录类的表；根据目录表获得详细表内容；
 * 返回数组类型，应该都包括分页相关参数: pageNum:1; pageSize:10; totalPage:1;
 * model.find().skip(start).limit(pageSize).exex(cbCbf);
+* 2016-03-16 ~ 2016-03-20 武将连接数据代码完成(先完成， 新增武将)；
 
 * 启动mongodb : ./mongod --dbpath ../data/db
 
