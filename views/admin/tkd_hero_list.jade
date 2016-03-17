@@ -5,7 +5,7 @@ block content
   //- 主页面
   // 选项卡类型
   input(type='hidden' value='#{tkd_type}' id='tabType')
-  .mainmenu.main-panel#mainmenu
+  .mainmenu.main-panel#mainMenu
     .menu-nav.row
       ul.nav.nav-tabs(role="tablist")
         li.col-md-3(id="menu-rule")
@@ -53,9 +53,9 @@ block content
                 td
             
         .form-group.mt10
-          a(id='country_list').btn.btn-primary 管理势力
-          a(id='package_list').ml20.btn.btn-primary 管理包
-          a(id='add_card_btn').ml20.btn.btn-primary 添加武将
+          a(id='countryBtn').btn.btn-primary 管理势力
+          a(id='packageBtn').ml20.btn.btn-primary 管理包
+          a(id='addHeroBtn').ml20.btn.btn-primary 添加武将
 
       .tab-pane(class="fade item-list" id="strategy") 攻略内容
 
@@ -77,6 +77,19 @@ block content
             button(type="button" id="removeSubmit").btn.btn-primary 确定
 
   include breadcrumb
+
+  //- 二级页面（新增、更新武将、包、势力）
+  .container.dn#subPanel
+    .row.dn.coutry_update_panel
+      form.form-horizontal(method="POST" action="tkd/countryAdd" name='countryform')
+        .alert.alert-warning.hidden(role='alert') 警告内容
+        //- 已有势力显示容器
+        .country_list_wrap
+        .form-group
+          .col-md-1.col-md-offset-1
+            .commit_btn.btn.btn-primary(data-type='add') 提交更新
+          .col-md-2
+            a.back_main.btn.btn-primary 返回
 
   // 加入上传插件
   script(type="text/javascript",src="/components/jquery.ui.widget.js")
