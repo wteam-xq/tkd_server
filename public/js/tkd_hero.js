@@ -27,11 +27,13 @@ $(function(){
   // 显示势力管理子页面
   function showCountryPanel(){
     var $countryPanel = $subPanel.find('.coutry_update_panel'),
+        $addCountry = $countryPanel.find('.add_country'),
         $submitBtn = $countryPanel.find('.commit_btn'),
         $backMainBtn = $countryPanel.find('.back_main');
     if (HeroObj.firstShowCountry){
       $submitBtn.on('click', submitCountryModify);
       $backMainBtn.on('click', backMainPanel);
+      $addCountry.on('click', showAddCountryModal);
       HeroObj.firstShowCountry = false;
     }
     $countryPanel.removeClass('dn');
@@ -55,6 +57,10 @@ $(function(){
   }
   // 显示更新武将子页面
   function showUpdateHeroPanel(){
+
+  }
+  // 显示弹层（调用通用模块）
+  function showAddCountryModal(){
 
   }
 });

@@ -20,10 +20,11 @@ TkdOtherSchema.statics = {
     return this
       .create(other, cb);
   },
-  // 根据类型， 更新表数据
+  // 根据类型，更新表数据
   updateInfo: function(type, otherObj, cb){
     
   },
+  // 删除指定类型数据：势力 或 包
   deleteInfo: function(type, cb){
     
   }

@@ -62,6 +62,8 @@ a {color: #00B7FF;}
 .card_detial_list_panel .add_detail_btn{ margin-left:10px; }
 .container .content{ height:15em; }
 
+.country_list_wrap{ width:800px; height:auto; }
+
 .l{float:left;}
 .r{float:right;}
 .cl{clear:both;}
