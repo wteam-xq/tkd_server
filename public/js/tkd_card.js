@@ -31,13 +31,6 @@ $(function(){
   var tkdCardObj = {
     init: function(){
       this.initEvt();
-      // bootstrap 居中
-      $confirmDialog.on('shown.bs.modal', function(){
-        var $this = $(this),
-            $modalDialog = $this.find('.modal-dialog'),
-            mTop = ( $(document).height() - $modalDialog.height() )/2;
-        $modalDialog.css({'margin': mTop + 'px auto'});
-      });
     },
     initEvt: function(){
       var This = this,

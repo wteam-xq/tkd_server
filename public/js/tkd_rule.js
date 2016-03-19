@@ -43,23 +43,6 @@ $(function(){
           delete_url = '';
 
       delete_url = '/admin/tkd/rule/delete';
-      // switch(_type){
-      //   case 'rule':
-      //     delete_url = '/admin/tkd/rule/delete';
-      //     break;
-      //   case 'card':
-      //     delete_url = '/admin/tkd/card/delete';
-      //     break;
-      //   case 'heros':
-      //     delete_url = '/admin/tkd/heros/delete';
-      //     break;
-      //   case 'strategy':
-      //     delete_url = '/admin/tkd/strategy/delete';
-      //     break;
-      //   default:
-      //     delete_url = '/admin/tkd/rule/delete';
-      // }
-
       $.post(delete_url, {id: _id}, function(data){
         if (data.error){
           $('#removeTips').html('删除异常:' + data.error + '  请刷新重试。');
@@ -75,13 +58,6 @@ $(function(){
       $selected_id.attr('data-type', '');
     });
 
-    // bootstrap 居中
-    $confirm_dialog.on('shown.bs.modal', function(){
-      var $this = $(this);
-      var $modal_dialog = $this.find('.modal-dialog');
-      var m_top = ( $(document).height() - $modal_dialog.height() )/2;
-      $modal_dialog.css({'margin': m_top + 'px auto'});
-    });
     // 二级页面返回一级页面按钮点击
     $sub_panel.find('.back-main').on('click', function(){
       var $this = $(this);

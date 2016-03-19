@@ -61,6 +61,16 @@ $(function(){
   }
   // 显示弹层（调用通用模块）
   function showAddCountryModal(){
+    CommonObj.confirmModal({
+      text: '测试标题',
+      id: 'countryModal',
+      title: '测试标题',
+      confirmCb: function(){
 
+      },
+      cancelCb: function(){
+
+      }
+    });
   }
 });

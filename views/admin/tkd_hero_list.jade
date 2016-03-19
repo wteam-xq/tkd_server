@@ -68,10 +68,8 @@ block content
               span(aria-hidden="true") &times;
               span.sr-only Close
             h4.modal-title 删除提示
-          
           .modal-body
-            p(id='removeips') 确定要删除该卡牌吗？
-          
+            p(id='removeips') 确定要删除该武将吗？
           .modal-footer
             button(type="button" data-dismiss="modal" id="cancelRemove").btn.btn-default 关闭
             button(type="button" id="removeSubmit").btn.btn-primary 确定
@@ -99,4 +97,5 @@ block content
   // 上传公共脚本
   script(type="text/javascript",src="/js/fileUpload.js")
   //导入tkd处理脚本
+  script(src="/js/common/common.js")
   script(src="/js/tkd_hero.js")
