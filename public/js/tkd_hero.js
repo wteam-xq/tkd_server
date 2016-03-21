@@ -61,15 +61,14 @@ $(function(){
   }
   // 显示弹层（调用通用模块）
   function showAddCountryModal(){
-    CommonObj.confirmModal({
-      text: '测试标题',
+    $.confirmModal({
       id: 'countryModal',
-      title: '测试标题',
-      confirmCb: function(){
-
-      },
-      cancelCb: function(){
-
+      title: '新增势力',
+      confirmCb: function($confirmModal){
+        var newName = $confirmModal.find('#modal_val').val();
+        $confirmModal.remove();
+        // 展示新添加的势力
+        alert(newName);
       }
     });
   }
