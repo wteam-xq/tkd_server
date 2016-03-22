@@ -65,11 +65,49 @@ $(function(){
       id: 'countryModal',
       title: '新增势力',
       confirmCb: function($confirmModal){
-        var newName = $confirmModal.find('#modal_val').val();
+        var $countryWrap = $subPanel.find('.country_list_wrap'),
+            $row = $countryWrap.find('.row:last'),
+            $newRow = null,
+            $label = $countryWrap.find('.row').find('.label');
+        var newName = $confirmModal.find('#modal_val').val(),
+            nameExist = false;
+        var labelStr = '<div class="label_wrap mb10 col-md-2"><span class="label label-default">' + newName + '</span><div>';
+        // 判断是否已存在相同名字标签
+        $label.each(function(i){
+          var $this = $(this);
+          if ( $this.text() == newName ){
+            nameExist = true;
+            return false;
+          }
+
+        });
         $confirmModal.remove();
-        // 展示新添加的势力
-        alert(newName);
+        if (nameExist) {
+          showCountryTips('该势力已存在！');
+          return false;
+        } else {
+          hideCountryTips();
+        }
+        if ( $row.children().length < 6 ){
+          // 展示新添加的势力
+          $row.append(labelStr);
+        } else {
+          $newRow = $('<div class="row"></div>');
+          $row.after($newRow);
+          $newRow.append(labelStr);
+        }
       }
     });
+  }
+  // 包管理显示错误提示
+  function showCountryTips(str){
+    var $alert = $subPanel.find('.coutry_update_panel').find('.alert');
+    $alert.html(str);
+    $alert.removeClass('hidden');
+  }
+  // 包管理隐藏错误提示
+  function hideCountryTips(){
+    var $alert = $subPanel.find('.coutry_update_panel').find('.alert');
+    $alert.addClass('hidden');
   }
 });
