@@ -71,7 +71,7 @@ $(function(){
             $label = $countryWrap.find('.row').find('.label');
         var newName = $confirmModal.find('#modal_val').val(),
             nameExist = false;
-        var labelStr = '<div class="label_wrap mb10 col-md-2"><span class="label label-default">' + newName + '</span><div>';
+        var labelStr = '<div class="label_wrap mb10 col-md-2"><div class="del_lab"></div><span class="label label-default">' + newName + '</span><div>';
         // 判断是否已存在相同名字标签
         $label.each(function(i){
           var $this = $(this);
