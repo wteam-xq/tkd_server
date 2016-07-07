@@ -33,6 +33,11 @@
 ### 遗留bug
 暂无
 
+### 待开发：
+* 1.tkd 武将后台管理；(考虑分页处理)
+* 2.tkd 攻略后台管理；
+* 3.个人简历后台管理；
+
 ### 小总结：
 * 实战中少用最新技术， 例如: coffeeScript， 这货不可调试；
 * 实战小技巧，nodejs 代码保存自动重启：[node-dev](https://www.npmjs.com/package/node-dev);

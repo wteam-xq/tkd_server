@@ -38,6 +38,10 @@ router.post('/tkd/card_detail/delete', tkdControl.deleteCardDetail);
 // 更新卡牌详情
 router.post('/tkd/updateCardDetail', tkdControl.updateCardDetal);
 
+// 新增武将势力
+
+// 新增武将包
+
 // 上传图标
 router.post('/upload/ico', tkdControl.uploadIco);
 /*个人简历后台列表页*/

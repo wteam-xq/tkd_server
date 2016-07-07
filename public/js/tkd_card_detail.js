@@ -24,6 +24,7 @@ $(function(){
     init: function(){
       this.initEvt();
       // 显示面表屑
+      $adminCrumb.find('.active').html('卡牌列表');
       $adminCrumb.removeClass('unvisible');
     },
     initEvt: function(){

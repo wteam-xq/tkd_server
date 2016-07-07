@@ -2,7 +2,7 @@
 ### 三国杀faq 第三版（模块化开发／后台管理）
 
 * 技术点： mongodb express bootstrap jquery
-
+* db_datas 放置当前工程的mongo数据库数据，方便迁移；
 =======
 
 #### 项目截图：

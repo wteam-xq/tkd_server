@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt-nodejs');
-var _ = require('underscore');
+var mongoose = require('mongoose'),
+    bcrypt = require('bcrypt-nodejs'),
+    _ = require('underscore');
 
 var HeroSchema = new mongoose.Schema({
   // 所属势力
@@ -68,7 +68,7 @@ HeroSchema.statics = {
   updateInfo: function(id, heroObj, cb){
     var heroModel = this;
     // 调用 save 进行更新
-    if (id == undefined || id == ''){
+    if (!id){
       cb({error: 'id格式不对！'}, 500);
     }
     var _hero = null;

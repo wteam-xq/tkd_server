@@ -1,22 +1,22 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+var express = require('express'),
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose');
 // 数据库保存用户登录信息
-var session = require('express-session');
-var mongoStore = require('connect-mongo')(session);
+var session = require('express-session'),
+    mongoStore = require('connect-mongo')(session);
 // 图片上传模块
 var buyboy = require('connect-busboy');
 var dbOptions = require('./dbConfig');
 // 路由模块
 var routes = require('./routes/index'),
     admin = require('./routes/admin');
-    
-var app = express();
 
+// 生成express对象 
+var app = express();
 // 链接数据库
 var db = mongoose.connect(dbOptions.url);
 // 连接数据库（数据库设置了密码）
