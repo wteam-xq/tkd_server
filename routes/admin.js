@@ -39,7 +39,7 @@ router.post('/tkd/card_detail/delete', tkdControl.deleteCardDetail);
 router.post('/tkd/updateCardDetail', tkdControl.updateCardDetal);
 
 // 新增武将势力
-
+router.post('/tkd/addCountry', tkdControl.editCountry);
 // 新增武将包
 
 // 上传图标

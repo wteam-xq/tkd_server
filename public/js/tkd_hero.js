@@ -18,12 +18,23 @@ $(function(){
       this.initEvt();
     },
     initEvt: function(){
+      var $countryLabelList = $subPanel.find('.country_list_wrap');
       $countryBtn.on('click', showCountryPanel);
       $packageBtn.on('click', showPackagePanel);
       $addHeroBtn.on('click', showAddHeroPanel);
+      // 武将已存在势力 hover事件
+      $countryLabelList.on('click', '.qa-close-btn', countryLabelHover);
     }
   };
   HeroObj.init();
+  // 可删除已存在势力
+  function countryLabelHover(e){
+    var $this = $(e.target),
+        $labelWrap = null;
+    e.preventDefault();
+    $labelWrap = $this.parents('.label_wrap'); 
+    $labelWrap.remove();
+  }
   // 显示势力管理子页面
   function showCountryPanel(){
     var $countryPanel = $subPanel.find('.coutry_update_panel'),
@@ -41,7 +52,7 @@ $(function(){
     $mainMenu.addClass('dn');
   }
   function submitCountryModify(){
-
+    alert('提交更新或新增的势力');
   }
   function backMainPanel(){
     $subPanel.addClass('dn');
@@ -71,7 +82,7 @@ $(function(){
             $label = $countryWrap.find('.row').find('.label');
         var newName = $confirmModal.find('#modal_val').val(),
             nameExist = false;
-        var labelStr = '<div class="label_wrap mb10 col-md-2"><div class="del_lab"></div><span class="label label-default">' + newName + '</span><div>';
+        var labelStr = '<div class="label_wrap mb10 col-md-2"><div class="del_lab"></div><span class="label label-default">' + newName + '<a href="####" title="点击删除QA项" class="qa-close-btn admin-sprite-bg"></a></span><div>';
         // 判断是否已存在相同名字标签
         $label.each(function(i){
           var $this = $(this);
@@ -79,9 +90,13 @@ $(function(){
             nameExist = true;
             return false;
           }
-
         });
         $confirmModal.remove();
+        // 中文名字长度不能超过10
+        if ( ValidateObj.isMaxChinaLength(newName, 10) ) {
+          showCountryTips('中文名字不能超过10个！');
+          return false;
+        }
         if (nameExist) {
           showCountryTips('该势力已存在！');
           return false;

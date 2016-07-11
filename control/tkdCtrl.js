@@ -448,6 +448,16 @@ tkdCtrol.updateCardDetal = function(req, res){
     }
   });
 }
+// 新增武将势力
+tkdCtrol.editCountry = function(req, res){
+  var countryObj = {
+    name: '武将势力',
+    datas: []
+  };
+  // 武将势力新增、修改都是调用该控制器
+  
+}
+
 // 根据ID获取卡牌详情数据
 tkdCtrol.getCardDetailById = function(req, res){
   var opt = {

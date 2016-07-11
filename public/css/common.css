@@ -63,7 +63,9 @@ a {color: #00B7FF;}
 .container .content{ height:15em; }
 
 .country_list_wrap{ width:800px; height:auto; }
-.label_wrap{ font-size:36px; }
+.label_wrap{ font-size:36px; cursor:default; }
+.label_wrap .label{ position: relative; }
+.label_wrap .qa-close-btn{ top:-15px; right:-15px; }
 
 .l{float:left;}
 .r{float:right;}

@@ -2,10 +2,11 @@
 var mongoose = require('mongoose'),
     _ = require('underscore');
 
-// tkd其他的数据库模型骨架（任意数据类型）
+// tkd其他的数据库模型骨架（对象数据类型）
 var TkdOtherSchema = new mongoose.Schema({
-  countryList: [{name:String}],
-  packageList: [{name:String}]
+  // 类型：“势力” 或 “包”
+  name: String,
+  datas: [],
 });
 
 // 数据模型方法(实际调用时， this 指向的是model对象)
@@ -42,7 +43,7 @@ TkdOtherSchema.statics = {
       });
     });
   },
-  // 删除指定类型数据：势力 或 包
+  // 删除指定类型数据
   deleteInfo: function(id, cb){
     var conditions = {_id: id};
     return this
