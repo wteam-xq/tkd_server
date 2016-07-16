@@ -6,6 +6,7 @@ var tkdCtrol = {},
     appUtil = require('../common/utils.js'),
     Card = require('../models/tkd_card'),
     Hero = require('../models/tkd_hero'),
+    Other = require('../models/tkd_other'),
     Rule = require('../models/tkd_rule');
 
 /**************************三国杀后台逻辑************************************/
@@ -454,7 +455,7 @@ tkdCtrol.editCountry = function(req, res){
     name: '武将势力',
     datas: []
   };
-  // 武将势力新增、修改都是调用该控制器
+  // 武将势力新增、修改都是调用该控制器(武将势力 或 包首次调用用新增 否则都是 修改)
   
 }
 

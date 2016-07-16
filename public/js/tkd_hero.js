@@ -52,7 +52,11 @@ $(function(){
     $mainMenu.addClass('dn');
   }
   function submitCountryModify(){
-    alert('提交更新或新增的势力');
+    var $this = $(this),
+        $countryPanel = $subPanel.find('.coutry_update_panel');
+
+    // 提取提交的 数组 数据
+    alert('提交势力更改');
   }
   function backMainPanel(){
     $subPanel.addClass('dn');
@@ -83,6 +87,17 @@ $(function(){
         var newName = $confirmModal.find('#modal_val').val(),
             nameExist = false;
         var labelStr = '<div class="label_wrap mb10 col-md-2"><div class="del_lab"></div><span class="label label-default">' + newName + '<a href="####" title="点击删除QA项" class="qa-close-btn admin-sprite-bg"></a></span><div>';
+        if (newName == '') {
+          $confirmModal.remove();
+          showCountryTips('名字不能为空！');
+          return false;
+        }
+        // 中文名字长度不能超过10
+        if ( ValidateObj.isMaxChinaLength(newName, 10) ) {
+          $confirmModal.remove();
+          showCountryTips('中文名字不能超过10个！');
+          return false;
+        }
         // 判断是否已存在相同名字标签
         $label.each(function(i){
           var $this = $(this);
@@ -92,11 +107,7 @@ $(function(){
           }
         });
         $confirmModal.remove();
-        // 中文名字长度不能超过10
-        if ( ValidateObj.isMaxChinaLength(newName, 10) ) {
-          showCountryTips('中文名字不能超过10个！');
-          return false;
-        }
+        
         if (nameExist) {
           showCountryTips('该势力已存在！');
           return false;
