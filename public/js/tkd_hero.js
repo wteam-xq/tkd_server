@@ -53,10 +53,25 @@ $(function(){
   }
   function submitCountryModify(){
     var $this = $(this),
-        $countryPanel = $subPanel.find('.coutry_update_panel');
+        $countryPanel = $subPanel.find('.coutry_update_panel'),
+        $countryList = $countryPanel.find('.country_list_wrap');
+    var opt = {}, nameList = [];
 
+    $countryList.find('.country_name_txt').each(function(){
+      var $this = $(this);
+      nameList.push( $this.html() );
+    });
+    opt.nameList = nameList;
     // 提取提交的 数组 数据
-    alert('提交势力更改');
+    $.post('/admin/tkd/addCountry', opt, function(result){
+      if (result.status == 200) {
+        // 主动刷新页面
+        
+        alert('编辑武将势力成功！');
+      } else {
+        alert('编辑武将势力异常，status:' + result.status);
+      }
+    }, 'json');
   }
   function backMainPanel(){
     $subPanel.addClass('dn');
@@ -79,6 +94,7 @@ $(function(){
     $.confirmModal({
       id: 'countryModal',
       title: '新增势力',
+      placeholder: '请输入新势力名称',
       confirmCb: function($confirmModal){
         var $countryWrap = $subPanel.find('.country_list_wrap'),
             $row = $countryWrap.find('.row:last'),
@@ -86,7 +102,7 @@ $(function(){
             $label = $countryWrap.find('.row').find('.label');
         var newName = $confirmModal.find('#modal_val').val(),
             nameExist = false;
-        var labelStr = '<div class="label_wrap mb10 col-md-2"><div class="del_lab"></div><span class="label label-default">' + newName + '<a href="####" title="点击删除QA项" class="qa-close-btn admin-sprite-bg"></a></span><div>';
+        var labelStr = '<div class="label_wrap mb10 col-md-2"><div class="del_lab"></div><div class="label label-default"><span class="country_name_txt">' + newName + '</span><a href="####" title="点击删除QA项" class="qa-close-btn admin-sprite-bg"></a></div><div>';
         if (newName == '') {
           $confirmModal.remove();
           showCountryTips('名字不能为空！');

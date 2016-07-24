@@ -455,8 +455,14 @@ tkdCtrol.editCountry = function(req, res){
     name: '武将势力',
     datas: []
   };
+  var nameList = [];
+  if (req.body && req.body.nameList) {
+    nameList = req.body.nameList;
+  }
+
   // 武将势力新增、修改都是调用该控制器(武将势力 或 包首次调用用新增 否则都是 修改)
-  
+  console.log('前端参数:' + nameList);
+  res.json({status:200, msg:'success!'});
 }
 
 // 根据ID获取卡牌详情数据
