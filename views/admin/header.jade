@@ -9,6 +9,8 @@
       a(href='/admin/tkd?tkd_type=rule' data-id="tkd") 三国杀FAQ 
     li
       a(href='/admin/resume' data-id="resume") 个人简历
+    li
+      a(href='/admin/git_api' data-id="git_api") 常用git指令
   ul.nav.navbar-nav.navbar-right.clear-right
     if type == 'tkd'
       li
@@ -16,6 +18,9 @@
     else if type == 'resume'
       li
         a(href='/resume' title="个人简历首页" target="_blank") 查看首页
+    else if type == 'git_api'
+      li
+        a(href='/git_api' title="git_api首页" target="_blank") 查看首页
     else
       li
         a(href='/index' title="用户列表首页" target="_blank") 查看首页

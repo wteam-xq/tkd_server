@@ -59,7 +59,13 @@ webCtrol.showTkd = function(req, res){
 // 前端简历页面
 webCtrol.showResume = function(req, res){
   res.render('resume', { 
-    title: '三国杀FAQ'
+    title: '个人简历'
+  });
+}
+// 前端git_api页面
+webCtrol.showGitApi = function(req, res){
+  res.render('git_api', { 
+    title: '常用git指令'
   });
 }
 // 前端用户组页面

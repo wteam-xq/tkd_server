@@ -21,7 +21,8 @@ router.get('/login', frontControl.showLogin);
 router.get('/tkd', frontControl.showTkd);
 // 前端简历页面
 router.get('/resume', frontControl.showResume);
-
+// 前端git_api页面
+router.get('/git_api', frontControl.showGitApi);
 
 router.get('/users/index', frontControl.index);
 // 用户登录异步请求

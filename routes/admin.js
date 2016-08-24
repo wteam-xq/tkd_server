@@ -3,7 +3,8 @@ var express = require('express'),
     userCtrol = require('../control/userCtrl'),
     UEControl = require('../control/UECtrl'),
     tkdControl = require('../control/tkdCtrl'),
-    resumeControl = require('../control/resumeCtrl');
+    resumeControl = require('../control/resumeCtrl'),
+    gitApiControl = require('../control/gitApiCtrl');
 
 router.get('/test', userCtrol.testList);
 //检查用户是否已登录
@@ -47,6 +48,9 @@ router.post('/upload/ico', tkdControl.uploadIco);
 /*个人简历后台列表页*/
 router.get('/resume', resumeControl.resumeIndex);
 router.get('/resume/index', resumeControl.resumeIndex);
+/*git_api后台列表*/
+router.get('/git_api', gitApiControl.gitApiIndex);
+router.get('/git_api/index', gitApiControl.gitApiIndex);
 /* 用户组后台列表页 */
 router.get('/users', userCtrol.userList);
 // 查询用户(暂根据邮箱查询)
