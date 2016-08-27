@@ -1,0 +1,5 @@
+$(function(){
+
+	var $gitMainWrap = null;
+
+});
